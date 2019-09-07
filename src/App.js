@@ -1,26 +1,51 @@
+import Container from "react-bootstrap/Container";
+
 import React from 'react';
-import logo from './logo.svg';
+import Navigation from './component/Navigation';
+import Home from './component/Home';
+import Favorite from './component/Favorite';
+import NotFound from './component/NotFound';
 import './App.css';
+import { Route, Switch } from "react-router-dom";
+import { Footer } from './component/Footer';
+import { ProductConsumer } from "./context";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ProductConsumer>
+        {value => {
+          const { theme } = value;
+          if (theme === "night") {
+            return (
+              <Container fluid className="night">
+                <Navigation />
+                <Switch>
+                  <Route exact path="/" component={Home} />
+                  <Route path="/favorite" component={Favorite} />
+                  <Route component={NotFound} />
+                </Switch>
+                <Footer styleFotter="night" />
+              </Container>
+            );
+          } else {
+            return (
+              <Container fluid className="day">
+                <Navigation />
+                <Switch>
+                  <Route exact path="/" component={Home} />
+                  <Route path="/favorite" component={Favorite} />
+                  <Route component={NotFound} />
+                </Switch>
+                <Footer styleFotter="day" />
+              </Container>
+            );
+          }
+        }}
+      </ProductConsumer>
+    </>
   );
+
 }
 
 export default App;
