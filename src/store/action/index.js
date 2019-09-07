@@ -31,17 +31,26 @@ export const requstData = (locatinKey) => {
             }
             dispatch(requestSucces(newCurrentCity, weatherForecastsList))
         })).catch(error => {
-            if (error.response) {
-                dispatch(requestFaild(error.response.data));
-                console.log(error.response.status);
-                console.log(error.response.headers);
-            } else if (error.request) {
-                dispatch(requestFaild(error.request));
-            } else {
-                dispatch(requestFaild(error.message));
-                console.log("Error", error.message);
+            console.log(error);
+
+            if (error.response !== undefined) {
+                if (error.response.status !== undefined) {
+                    const errCode = error.response.status;
+                    if (errCode === 404) {
+                        dispatch(requestFaild(error.response.data));
+
+                    } if (errCode === 503) {
+                        console.log('msg: ', error.response.data.Message);
+                        dispatch(requestFaild(error.response.data.Message));
+                    }
+                } else {
+                    dispatch(requestFaild(JSON.stringify(error.response.data)));
+                }
             }
-            console.log(error.config);
+            else {
+                const err = "Network Error"
+                dispatch(requestFaild(err));
+            }
         });
     }
 }
