@@ -3,7 +3,7 @@ import * as actionTypes from './actionTypes';
 
 
 export const requstData = (locatinKey) => {
-    const API_KEY = `YTPWuHpGRIfJAhbK6PT1ZGz8QLK74rqr`;
+    const API_KEY = `iAMzJxW63zxiBwJ9PDghyrOmQVJiqGvB`;
     const CURRENT_WEATHER_URL = `dataservice.accuweather.com/currentconditions/v1/${locatinKey}?apikey=${API_KEY}`;
     const WEATHER_FORECASTS_URL = `dataservice.accuweather.com/forecasts/v1/daily/5day/${locatinKey}?apikey=${API_KEY}`;
     return (dispatch, getState) => {
@@ -135,7 +135,7 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSerach) => {
     }
 }
 export const requestAutocompleteCities = input => {
-    const API_KEY = `YTPWuHpGRIfJAhbK6PT1ZGz8QLK74rqr`;
+    const API_KEY = `iAMzJxW63zxiBwJ9PDghyrOmQVJiqGvB`;
     const MY_API_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
     return dispatch => {
         dispatch(requestPending())
