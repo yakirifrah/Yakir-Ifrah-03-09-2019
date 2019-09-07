@@ -13,10 +13,11 @@ export default function SearchBar() {
   const isLoading = useSelector(state => state.loading);
   const detailCitiesSerach = useSelector(state => state.detailCitiesSerach);
   const currentCity = useSelector(state => state.currentCity);
+  const favoriteCities = useSelector(state => state.favoriteCities);
   const dispatch = useDispatch();
-  const handleSearch = async query => {
+  const handleSearch = query => {
     if (query.length === 2) {
-      await dispatch(requestAutocompleteCities(query));
+      dispatch(requestAutocompleteCities(query));
     }
   };
 
@@ -24,7 +25,12 @@ export default function SearchBar() {
     const selectedCity = selectedOptions[0];
     if (selectedCity)
       dispatch(
-        setLocationCityKey(selectedCity, currentCity, detailCitiesSerach)
+        setLocationCityKey(
+          selectedCity,
+          currentCity,
+          detailCitiesSerach,
+          favoriteCities
+        )
       );
   };
 

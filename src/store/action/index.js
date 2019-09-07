@@ -3,7 +3,7 @@ import * as actionTypes from './actionTypes';
 
 
 export const requstData = (locatinKey) => {
-    const API_KEY = `iAMzJxW63zxiBwJ9PDghyrOmQVJiqGvB`;
+    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
     const CURRENT_WEATHER_URL = `dataservice.accuweather.com/currentconditions/v1/${locatinKey}?apikey=${API_KEY}`;
     const WEATHER_FORECASTS_URL = `dataservice.accuweather.com/forecasts/v1/daily/5day/${locatinKey}?apikey=${API_KEY}`;
     return (dispatch, getState) => {
@@ -95,7 +95,7 @@ export const toggleFavorite = (currentCity, favoriteCities) => {
             delete favoriteCities[key];
         }
     } else {
-        favoriteCities[key] = { id: key, name: currentCity.name, temp: currentCity.temp, text: currentCity.text };
+        favoriteCities[key] = { id: key, name: currentCity.name, temp: currentCity.temp, text: currentCity.text, isFavorite: true };
     }
 
 
@@ -116,12 +116,17 @@ export const toggleFavorite = (currentCity, favoriteCities) => {
 
 
 
-export const setLocationCityKey = (city, currentCity, detailCitiesSerach) => {
+export const setLocationCityKey = (city, currentCity, detailCitiesSerach, favoriteCities) => {
+
     let item = detailCitiesSerach.find(element => {
         if (element.LocalizedName === city) {
             return element;
         }
     });
+    console.log(city);
+    console.log('item key:: ', item);
+    console.log('detail: ', detailCitiesSerach);
+
     return {
         type: actionTypes.SET_LOCATION_KEY,
         currentCity: {
@@ -135,7 +140,7 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSerach) => {
     }
 }
 export const requestAutocompleteCities = input => {
-    const API_KEY = `iAMzJxW63zxiBwJ9PDghyrOmQVJiqGvB`;
+    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
     const MY_API_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
     return dispatch => {
         dispatch(requestPending())
