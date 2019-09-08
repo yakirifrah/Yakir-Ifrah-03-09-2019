@@ -15,7 +15,8 @@ All data from ​AccuWeather API​. https://developer.accuweather.com/
 ## Deployment 
 
 Deploy app in Heroku server  ​​ https://my-weather-app-by-herolo.herokuapp.com/
+
 Enjoy:)
 
 ## Authors
-- yakir ifrah
+- yakirifrah
