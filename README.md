@@ -1,7 +1,8 @@
 
 ## Weather App
 
-Weather Forecasting App gives you an easy way to Know the weather of some city and more...
+Weather Forecasting App gives you an easy way to Know the weather of some city and more
+
 All data from ​AccuWeather API​. https://developer.accuweather.com/
 
 
