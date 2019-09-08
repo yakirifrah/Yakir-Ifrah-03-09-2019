@@ -1,23 +1,29 @@
 body {
   overflow-x: hidden;
+
 }
+
 App {
   text-align: center;
   margin: 0;
   padding: 0;
 }
+
 .container-fluid {
   margin: 0px !important;
   padding: 0px !important;
 }
+
 .day {
   color: black;
   background-color: white;
 }
+
 .night {
   color: #5692e6;
   background-color: #142b41;
 }
+
 span {
   color: black;
 }

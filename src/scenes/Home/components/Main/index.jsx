@@ -12,6 +12,7 @@ import { ButtonContainer } from "../../../common/components/Button";
 import { ContainerModal as Modal } from "../Modal";
 import CardList from "../../../common/components/CardList";
 
+import './style.scss';
 const Main = () => {
   const error = useSelector(state => state.error);
   const currentCity = useSelector(state => state.currentCity);

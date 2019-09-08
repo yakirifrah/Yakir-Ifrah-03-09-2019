@@ -1,0 +1,13 @@
+@import "../../variables.scss";
+@import url('https://fonts.googleapis.com/css?family=Chelsea+Market&display=swap');
+
+
+.text-title {
+    font-family: 'Chelsea Market', cursive;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+}
+
+.text-blue {
+    color: $deepBlue;
+}

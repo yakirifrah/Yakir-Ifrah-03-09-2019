@@ -123,7 +123,6 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSerach, favori
         }
     });
     if (Object.getOwnPropertyNames(favoriteCities).length > 0 && item.Key in favoriteCities) {
-        console.log('favorite after : ', favoriteCities)
         return {
             type: actionTypes.SET_LOCATION_KEY,
             currentCity: {

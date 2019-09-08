@@ -9,6 +9,7 @@ import Container from "react-bootstrap/Container";
 import Title from "../common/components/Title";
 import CardList from "../common/components/CardList";
 
+import "./style.scss";
 export default function Favorite() {
   const listFavoriteCities = useSelector(state => state.favoriteCities);
   return (

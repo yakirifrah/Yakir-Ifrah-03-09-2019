@@ -1,0 +1,21 @@
+@import ".././../variables";
+
+.navbar {
+  background-color: $mainDark;
+}
+
+.container-fluid {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.nav-item a,
+h5 {
+  color: $mainWhite !important;
+  font-size: large;
+}
+
+.nav-item {
+  margin-left: 15px;
+  margin-right: 15px;
+}

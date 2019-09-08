@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ProductConsumer } from "../../../../context";
-
+import "./style.scss";
 class Slider extends React.Component {
   render() {
     return (

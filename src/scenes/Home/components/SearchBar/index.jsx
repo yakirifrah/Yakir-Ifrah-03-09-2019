@@ -90,4 +90,7 @@ const Styles = styled.div`
   path {
     color: #1abc9c;
   }
+  a {
+    color: black !importent;
+  }
 `;
