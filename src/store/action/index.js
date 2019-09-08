@@ -3,7 +3,8 @@ import * as actionTypes from './actionTypes';
 
 
 export const requstData = (locatinKey) => {
-    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
+    console.log('request data act');
+    const API_KEY = `Zz5x18nn2DwbYFUPGFl0VTN4Ssr1w1QY`;
     const CURRENT_WEATHER_URL = `dataservice.accuweather.com/currentconditions/v1/${locatinKey}?apikey=${API_KEY}`;
     const WEATHER_FORECASTS_URL = `dataservice.accuweather.com/forecasts/v1/daily/5day/${locatinKey}?apikey=${API_KEY}`;
     return (dispatch, getState) => {
@@ -64,6 +65,7 @@ export const requestSucces = (currentCity, weatherForecastsList) => {
     }
 }
 export const requestSearchSucces = (detailCitiesSerach, tempCities) => {
+    console.log('success : ', detailCitiesSerach);
     return {
         type: actionTypes.REQUEST_AUTOCOMPLETE_SUCCESS,
         detailCitiesSerach: detailCitiesSerach,
@@ -118,29 +120,51 @@ export const toggleFavorite = (currentCity, favoriteCities) => {
 
 export const setLocationCityKey = (city, currentCity, detailCitiesSerach, favoriteCities) => {
 
+    console.log('detail: ', detailCitiesSerach);
     let item = detailCitiesSerach.find(element => {
         if (element.LocalizedName === city) {
             return element;
         }
     });
     console.log(city);
+    console.log('favorite : ', favoriteCities)
     console.log('item key:: ', item);
-    console.log('detail: ', detailCitiesSerach);
-
-    return {
-        type: actionTypes.SET_LOCATION_KEY,
-        currentCity: {
-            locatinKey: item.Key,
-            name: city,
-            isFavorite: false,
-            temp: currentCity.temp,
-            text: currentCity.text,
-            icon: currentCity.icon
+    if (Object.getOwnPropertyNames(favoriteCities).length > 0 && item.Key in favoriteCities) {
+        console.log('favorite after : ', favoriteCities)
+        return {
+            type: actionTypes.SET_LOCATION_KEY,
+            currentCity: {
+                locatinKey: item.Key,
+                name: city,
+                isFavorite: true,
+                temp: currentCity.temp,
+                text: currentCity.text,
+                icon: currentCity.icon
+            }
         }
+    } else {
+        return {
+            type: actionTypes.SET_LOCATION_KEY,
+            currentCity: {
+                locatinKey: item.Key,
+                name: city,
+                isFavorite: false,
+                temp: currentCity.temp,
+                text: currentCity.text,
+                icon: currentCity.icon
+            }
+        }
+
     }
+    // if (!detailCitiesSerach.length) {
+
+
+    // }
+
 }
 export const requestAutocompleteCities = input => {
-    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
+    console.log('request auto complete: ', input);
+    const API_KEY = `Zz5x18nn2DwbYFUPGFl0VTN4Ssr1w1QY`;
     const MY_API_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
     return dispatch => {
         dispatch(requestPending())

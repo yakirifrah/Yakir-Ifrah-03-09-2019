@@ -1,29 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { useSelector, useDispatch } from "react-redux";
 import { requestAutocompleteCities, setLocationCityKey } from "../store/action";
+import _ from "lodash";
 
 import styled from "styled-components";
 
 export default function SearchBar() {
   const autoCompleteCities = useSelector(state => state.autoCompleteCities);
-  const isLoading = useSelector(state => state.loading);
   const detailCitiesSerach = useSelector(state => state.detailCitiesSerach);
   const currentCity = useSelector(state => state.currentCity);
   const favoriteCities = useSelector(state => state.favoriteCities);
   const dispatch = useDispatch();
-  const handleSearch = query => {
+  const handleSearch = _.debounce(async query => {
+    console.log("serach...");
     if (query.length === 2) {
-      dispatch(requestAutocompleteCities(query));
+      await dispatch(requestAutocompleteCities(query));
     }
-  };
+  }, 1000);
 
-  const handleChange = selectedOptions => {
+  const handleChange = _.debounce(selectedOptions => {
     const selectedCity = selectedOptions[0];
-    if (selectedCity)
+    if (selectedCity) {
       dispatch(
         setLocationCityKey(
           selectedCity,
@@ -32,7 +33,8 @@ export default function SearchBar() {
           favoriteCities
         )
       );
-  };
+    }
+  }, 0);
 
   return (
     <Styles>
@@ -44,7 +46,6 @@ export default function SearchBar() {
         </InputGroup.Prepend>
         <AsyncTypeahead
           id="search"
-          isLoading={isLoading}
           bsSize="large"
           placeholder="search ..."
           labelKey="search"

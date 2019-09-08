@@ -17,7 +17,7 @@ const Main = () => {
   const favoriteCities = useSelector(state => state.favoriteCities);
   const weatherForecastsList = useSelector(state => state.weatherForecastsList);
   const dispatch = useDispatch();
-
+  console.log("barbar : ", currentCity.locatinKey);
   var nameOfImg = [1.1, 1, 2.0, 2.1, 2, 3, 4, 7, 12, 15, 33, 34, 35];
   const icon = useSelector(state => state.currentCity.icon);
   const realIcon = nameOfImg.includes(icon)

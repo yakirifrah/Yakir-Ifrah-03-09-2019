@@ -19,7 +19,7 @@ export default function Favorite() {
       {Object.getOwnPropertyNames(listFavoriteCities).length === 0 ? (
         <Row className="text-center mt-5">
           <Col xs={12} md={12} lg={12}>
-            <Title name="Favorite cities" title="empty" />
+            <Title title="empty" />
           </Col>
         </Row>
       ) : (
