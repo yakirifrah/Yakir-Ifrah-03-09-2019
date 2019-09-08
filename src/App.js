@@ -1,13 +1,15 @@
-import Container from "react-bootstrap/Container";
-
 import React from 'react';
-import Navigation from './component/Navigation';
-import Home from './component/Home';
-import Favorite from './component/Favorite';
-import NotFound from './component/NotFound';
 import './App.css';
+
+
+import Container from "react-bootstrap/Container";
 import { Route, Switch } from "react-router-dom";
-import { Footer } from './component/Footer';
+
+import Navigation from './scenes/common/components/Navigation';
+import Home from './scenes/Home';
+import Favorite from './scenes/Favorite';
+import NotFound from './scenes/NotFound';
+import { Footer } from './scenes/common/components/Footer';
 import { ProductConsumer } from "./context";
 
 function App() {

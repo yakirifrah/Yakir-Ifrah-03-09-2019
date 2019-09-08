@@ -1,8 +1,8 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SearchBar from "./SearchBar";
-import Main from "./Main";
+import SearchBar from "./components/SearchBar";
+import Main from "./components/Main";
 export default function Home() {
   return (
     <>

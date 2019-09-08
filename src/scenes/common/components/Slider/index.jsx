@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ProductConsumer } from "../context";
+import { ProductConsumer } from "../../../../context";
 
 class Slider extends React.Component {
   render() {

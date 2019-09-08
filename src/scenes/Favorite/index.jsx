@@ -1,12 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CardDeck from "react-bootstrap/CardDeck";
 import Container from "react-bootstrap/Container";
-import Title from "./Title";
-import { useSelector } from "react-redux";
 
-import CardList from "./CardList";
+import Title from "../common/components/Title";
+import CardList from "../common/components/CardList";
+
 export default function Favorite() {
   const listFavoriteCities = useSelector(state => state.favoriteCities);
   return (

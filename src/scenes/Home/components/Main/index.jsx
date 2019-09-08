@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { requstData, toggleFavorite } from "../store/action";
+import { requstData, toggleFavorite } from "../../../../store/action/index";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CardDeck from "react-bootstrap/CardDeck";
-import Title from "./Title";
-import { ButtonContainer } from "./Button";
-import { ContainerModal as Modal } from "./Modal";
-import CardList from "./CardList";
+
+import Title from "../../../common/components/Title";
+import { ButtonContainer } from "../../../common/components/Button";
+import { ContainerModal as Modal } from "../Modal";
+import CardList from "../../../common/components/CardList";
 
 const Main = () => {
   const error = useSelector(state => state.error);
@@ -17,7 +18,6 @@ const Main = () => {
   const favoriteCities = useSelector(state => state.favoriteCities);
   const weatherForecastsList = useSelector(state => state.weatherForecastsList);
   const dispatch = useDispatch();
-  console.log("barbar : ", currentCity.locatinKey);
   var nameOfImg = [1.1, 1, 2.0, 2.1, 2, 3, 4, 7, 12, 15, 33, 34, 35];
   const icon = useSelector(state => state.currentCity.icon);
   const realIcon = nameOfImg.includes(icon)
@@ -35,7 +35,7 @@ const Main = () => {
             <Col xs={3} md={1} lg={1}>
               <div className="current-weather-city">
                 <img
-                  src={require(`../assets/images/weathericons/${realIcon}.svg`)}
+                  src={require(`../../../../assets/images/weathericons/${realIcon}.svg`)}
                   alt="img"
                   className="img-fluid"
                 />

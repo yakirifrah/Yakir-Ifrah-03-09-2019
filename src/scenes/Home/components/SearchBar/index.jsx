@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { useSelector, useDispatch } from "react-redux";
-import { requestAutocompleteCities, setLocationCityKey } from "../store/action";
+import {
+  requestAutocompleteCities,
+  setLocationCityKey
+} from "../../../../store/action";
 import _ from "lodash";
 
 import styled from "styled-components";
@@ -14,9 +17,11 @@ export default function SearchBar() {
   const detailCitiesSerach = useSelector(state => state.detailCitiesSerach);
   const currentCity = useSelector(state => state.currentCity);
   const favoriteCities = useSelector(state => state.favoriteCities);
+
+  const isLoading = useSelector(state => state.isLoading);
+
   const dispatch = useDispatch();
   const handleSearch = _.debounce(async query => {
-    console.log("serach...");
     if (query.length === 2) {
       await dispatch(requestAutocompleteCities(query));
     }
@@ -45,6 +50,7 @@ export default function SearchBar() {
           </InputGroup.Text>
         </InputGroup.Prepend>
         <AsyncTypeahead
+          isLoading={isLoading}
           id="search"
           bsSize="large"
           placeholder="search ..."
