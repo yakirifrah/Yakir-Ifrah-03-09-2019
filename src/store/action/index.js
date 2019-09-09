@@ -3,56 +3,55 @@ import * as actionTypes from './actionTypes';
 
 
 export const requstData = (locatinKey) => {
-    const API_KEY = `YTPWuHpGRIfJAhbK6PT1ZGz8QLK74rqr`;
+    const API_KEY = `SrTwdFFwO2YfqdquDgzrLwbZ9f7GoI2i`;
     const CURRENT_WEATHER_URL = `dataservice.accuweather.com/currentconditions/v1/${locatinKey}?apikey=${API_KEY}`;
     const WEATHER_FORECASTS_URL = `dataservice.accuweather.com/forecasts/v1/daily/5day/${locatinKey}?apikey=${API_KEY}`;
     return (dispatch, getState) => {
         dispatch(requestPending())
-        setTimeout(() => {
-            axios.all([
-                axios.get(`https://cors-anywhere.herokuapp.com/${CURRENT_WEATHER_URL}`),
-                axios.get(
-                    `https://cors-anywhere.herokuapp.com/${WEATHER_FORECASTS_URL}`)
-            ]).then(axios.spread((currentWeather, forecastsWeather) => {
-                const currentTemp = Math.round(currentWeather.data[0].Temperature.Metric.Value);
-                const WeatherText = currentWeather.data[0].WeatherText;
-                const WeatherIcon = currentWeather.data[0].WeatherIcon;
-                const weatherForecastsList = forecastsWeather.data.DailyForecasts;
-                const newCurrentCity = getState().currentCity;
-                newCurrentCity.temp = currentTemp;
-                newCurrentCity.text = WeatherText;
-                newCurrentCity.locatinKey = locatinKey;
-                newCurrentCity.icon = WeatherIcon
-                if (Object.getOwnPropertyNames(getState().favoriteCities).length > 0) {
-                    const favoriteCities = getState().favoriteCities;
-                    if (locatinKey in favoriteCities) {
-                        newCurrentCity.name = favoriteCities[locatinKey].name;
-                    }
+        axios.all([
+            axios.get(`https://cors-anywhere.herokuapp.com/${CURRENT_WEATHER_URL}`),
+            axios.get(
+                `https://cors-anywhere.herokuapp.com/${WEATHER_FORECASTS_URL}`)
+        ]).then(axios.spread((currentWeather, forecastsWeather) => {
+            const currentTemp = Math.round(currentWeather.data[0].Temperature.Metric.Value);
+            const WeatherText = currentWeather.data[0].WeatherText;
+            const WeatherIcon = currentWeather.data[0].WeatherIcon;
+            const weatherForecastsList = forecastsWeather.data.DailyForecasts;
+            const newCurrentCity = getState().currentCity;
+            newCurrentCity.temp = currentTemp;
+            newCurrentCity.text = WeatherText;
+            newCurrentCity.locatinKey = locatinKey;
+            newCurrentCity.icon = WeatherIcon
+            if (Object.getOwnPropertyNames(getState().favoriteCities).length > 0) {
+                const favoriteCities = getState().favoriteCities;
+                if (locatinKey in favoriteCities) {
+                    newCurrentCity.name = favoriteCities[locatinKey].name;
+                }
 
-                }
-                dispatch(requestSucces(newCurrentCity, weatherForecastsList))
-            })).catch(error => {
-                console.log(error);
+            }
+            dispatch(requestSucces(newCurrentCity, weatherForecastsList))
+        })).catch(error => {
+            console.log(error);
 
-                if (error.response !== undefined) {
-                    if (error.response.status !== undefined) {
-                        const errCode = error.response.status;
-                        if (errCode === 404) {
-                            dispatch(requestFaild(error.response.data));
-                        } if (errCode === 503) {
-                            console.log('msg: ', error.response.data.Message);
-                            dispatch(requestFaild(error.response.data.Message));
-                        }
-                    } else {
-                        dispatch(requestFaild(JSON.stringify(error.response.data)));
+            if (error.response !== undefined) {
+                if (error.response.status !== undefined) {
+                    const errCode = error.response.status;
+                    if (errCode === 404) {
+                        dispatch(requestFaild(error.response.data));
+                    } if (errCode === 503) {
+                        console.log('msg: ', error.response.data.Message);
+                        dispatch(requestFaild(error.response.data.Message));
                     }
+                } else {
+                    dispatch(requestFaild(JSON.stringify(error.response.data)));
                 }
-                else {
-                    const err = "Network Error"
-                    dispatch(requestFaild(err));
-                }
-            });
-        }, 777);
+            }
+            else {
+                const err = "Network Error"
+                dispatch(requestFaild(err));
+            }
+        });
+
 
     }
 }
@@ -151,7 +150,7 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSerach, favori
     }
 }
 export const requestAutocompleteCities = input => {
-    const API_KEY = `YTPWuHpGRIfJAhbK6PT1ZGz8QLK74rqr`;
+    const API_KEY = `SrTwdFFwO2YfqdquDgzrLwbZ9f7GoI2i`;
     const MY_API_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
     return dispatch => {
         dispatch(requestPending())
