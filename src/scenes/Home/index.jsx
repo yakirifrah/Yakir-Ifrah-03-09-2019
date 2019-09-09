@@ -6,8 +6,8 @@ import Main from "./components/Main";
 export default function Home() {
   return (
     <>
-      <Row className="justify-content-md-center mt-5">
-        <Col md="auto" xs lg="6">
+      <Row className="justify-content-center mt-5">
+        <Col md={10} xs={8} lg={6}>
           <SearchBar />
         </Col>
       </Row>
