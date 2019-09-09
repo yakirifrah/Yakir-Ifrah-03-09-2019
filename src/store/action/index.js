@@ -52,7 +52,7 @@ export const requstData = (locatinKey) => {
                     dispatch(requestFaild(err));
                 }
             });
-        }, 1200);
+        }, 777);
 
     }
 }
