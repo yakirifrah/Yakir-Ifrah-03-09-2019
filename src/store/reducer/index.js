@@ -14,7 +14,6 @@ const initialState = {
         isFavorite: false,
         icon: 34
     },
-    favoriteCities: {}
 }
 const requsetPending = (state, action) => {
     return updateObject(state, {

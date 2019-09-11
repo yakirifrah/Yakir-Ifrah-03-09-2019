@@ -1,6 +1,7 @@
 body {
-  overflow-x: auto;
-
+  overflow-x: hidden;
+  height: 100vh;
+  width: 100vw;
 }
 
 App {
@@ -8,6 +9,7 @@ App {
   margin: 0;
   padding: 0;
 }
+
 
 .container-fluid {
   margin: 0px !important;
@@ -22,6 +24,14 @@ App {
 .night {
   color: #5692e6;
   background-color: #142b41;
+}
+
+.container-fluid {
+
+  &.day,
+  &.night {
+    height: 90vh;
+  }
 }
 
 span {

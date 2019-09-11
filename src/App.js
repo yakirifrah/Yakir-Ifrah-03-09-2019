@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.scss';
 
 
@@ -20,27 +20,31 @@ function App() {
           const { theme } = value;
           if (theme === "night") {
             return (
-              <Container fluid className="night">
-                <Navigation />
-                <Switch>
-                  <Route exact path="/" component={Home} />
-                  <Route path="/favorite" component={Favorite} />
-                  <Route component={NotFound} />
-                </Switch>
+              <>
+                <Container fluid className="night">
+                  <Navigation />
+                  <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/favorite" component={Favorite} />
+                    <Route component={NotFound} />
+                  </Switch>
+                </Container>
                 <Footer styleFotter="night" />
-              </Container>
+              </>
             );
           } else {
             return (
-              <Container fluid className="day">
-                <Navigation />
-                <Switch>
-                  <Route exact path="/" component={Home} />
-                  <Route path="/favorite" component={Favorite} />
-                  <Route component={NotFound} />
-                </Switch>
+              <>
+                <Container fluid className="day">
+                  <Navigation />
+                  <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/favorite" component={Favorite} />
+                    <Route component={NotFound} />
+                  </Switch>
+                </Container>
                 <Footer styleFotter="day" />
-              </Container>
+              </>
             );
           }
         }}

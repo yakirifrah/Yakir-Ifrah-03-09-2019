@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-
-import './style.scss';
+import { Link } from "react-router-dom";
+import "./style.scss";
 export const CardContiner = ({
   header,
   temp,
@@ -12,21 +12,39 @@ export const CardContiner = ({
   const cardClicked = () => {
     handleClickCard(locationKey);
   };
-
   return (
-    <Card
-      onClick={handleClickCard ? cardClicked : null}
-      className={
-        handleClickCard ? "card-click-able text-center" : "text-center"
-      }
-    >
-      <Card.Header>{header}</Card.Header>
-      <Card.Body>
-        <span className="high"> {temp}&#8451;</span>
-      </Card.Body>
-      <Card.Footer>
-        <strong>{text}</strong>
-      </Card.Footer>
-    </Card>
+    <>
+      {handleClickCard ? (
+        <Link to={{ pathname: "/", state: { id: locationKey } }}>
+          <Card
+            className={
+              handleClickCard ? "card-click-able text-center" : "text-center"
+            }
+          >
+            <Card.Header>{header}</Card.Header>
+            <Card.Body>
+              <span className="high"> {temp}&#8451;</span>
+            </Card.Body>
+            <Card.Footer>
+              <strong>{text}</strong>
+            </Card.Footer>
+          </Card>
+        </Link>
+      ) : (
+        <Card
+          className={
+            handleClickCard ? "card-click-able text-center" : "text-center"
+          }
+        >
+          <Card.Header>{header}</Card.Header>
+          <Card.Body>
+            <span className="high"> {temp}&#8451;</span>
+          </Card.Body>
+          <Card.Footer>
+            <strong>{text}</strong>
+          </Card.Footer>
+        </Card>
+      )}
+    </>
   );
 };

@@ -7,7 +7,7 @@ import "./style.scss";
 function Navigation() {
   const items = ["Home", "Favorite"];
   return (
-    <Container fluid>
+    <Container fluid className="nav-bar">
       <Navbar sticky="top">
         <h5 className="style-text">Herolo Weather Task</h5>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

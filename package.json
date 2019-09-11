@@ -24,6 +24,7 @@
     "react-transition-group": "^4.2.2",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
+    "store": "^2.0.12",
     "styled-components": "^4.3.2"
   },
   "scripts": {

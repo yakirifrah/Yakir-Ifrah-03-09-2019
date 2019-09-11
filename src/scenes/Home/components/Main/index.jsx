@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { requstData, toggleFavorite } from "../../../../store/action/index";
-
+import store from "store";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -12,12 +12,11 @@ import { ContainerModal as Modal } from "../Modal";
 import CardList from "../../../common/components/CardList";
 
 import "./style.scss";
-const Main = () => {
+const Main = id => {
   const error = useSelector(state => state.error);
   const currentCity = useSelector(state => state.currentCity);
-  const favoriteCities = useSelector(state => state.favoriteCities);
+  const favoriteCities = store.get("favoriteCities");
   const weatherForecastsList = useSelector(state => state.weatherForecastsList);
-  const isLoading = useSelector(state => state.loading);
   const dispatch = useDispatch();
   var nameOfImg = [1.1, 1, 2.0, 2.1, 2, 3, 4, 7, 12, 15, 33, 34, 35];
   const icon = useSelector(state => state.currentCity.icon);
@@ -25,13 +24,22 @@ const Main = () => {
     ? icon
     : nameOfImg[Math.floor(Math.random() * nameOfImg.length)];
 
-  useEffect(() => dispatch(requstData(currentCity.locatinKey)), [
-    currentCity.locatinKey
-  ]);
+  useEffect(() => {
+    if (Object.getOwnPropertyNames(id).length) {
+      dispatch(requstData(id.id));
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (!Object.getOwnPropertyNames(id).length) {
+      dispatch(requstData(currentCity.locatinKey));
+    }
+  }, [currentCity.locatinKey]);
+
   return (
     <>
       {!error ? (
-        <Container className="main-container mt-4 p-5">
+        <Container className="main-container mt-2 p-5">
           <Row className="mb-3">
             <Col xs={3} md={1} lg={1}>
               <div className="current-weather-city">
@@ -74,10 +82,9 @@ const Main = () => {
           <CardDeck className="pt-5 justify-content-center">
             <CardList data={weatherForecastsList} msg="weatherForecastsList" />
           </CardDeck>
-          )}
         </Container>
       ) : (
-        <Container className="text-center mt-5 p-4">
+        <Container className="text-center">
           <Modal title="error" msg={error} />
         </Container>
       )}

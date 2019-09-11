@@ -27,10 +27,13 @@ const CardList = ({ data, msg, history }) => {
     return tempC;
   };
 
-  const handleClickCard = _.debounce(async id => {
-    await dispatch(requstData(id));
-    history.push("/");
-  }, 1000);
+  const handleClickCard = id => {
+    // await dispatch(requstData(id));
+    history.push({
+      pathname: "/",
+      state: { locationKey: id }
+    });
+  };
   return (
     <>
       {msg === "weatherForecastsList"

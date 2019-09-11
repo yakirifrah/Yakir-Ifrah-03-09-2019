@@ -5,8 +5,11 @@
 }
 
 .container-fluid {
-  padding-right: 0px;
-  padding-left: 0px;
+  &.nav-bar {
+    padding-right: 0px;
+    padding-left: 0px;
+    height: 10vh;
+  }
 }
 
 .nav-item a,
