@@ -14,7 +14,7 @@ import styled from "styled-components";
 
 export default function SearchBar() {
   const autoCompleteCities = useSelector(state => state.autoCompleteCities);
-  const detailCitiesSerach = useSelector(state => state.detailCitiesSerach);
+  const detailCitiesSearch = useSelector(state => state.detailCitiesSearch);
   const currentCity = useSelector(state => state.currentCity);
   const favoriteCities = useSelector(state => state.favoriteCities);
 
@@ -25,7 +25,7 @@ export default function SearchBar() {
     if (query.length === 2) {
       await dispatch(requestAutocompleteCities(query));
     }
-  }, 1000);
+  }, 350);
 
   const handleChange = _.debounce(selectedOptions => {
     const selectedCity = selectedOptions[0];
@@ -34,7 +34,7 @@ export default function SearchBar() {
         setLocationCityKey(
           selectedCity,
           currentCity,
-          detailCitiesSerach,
+          detailCitiesSearch,
           favoriteCities
         )
       );
@@ -91,6 +91,6 @@ const Styles = styled.div`
     color: #1abc9c;
   }
   a {
-    color: black !importent;
+    color: black !important;
   }
 `;

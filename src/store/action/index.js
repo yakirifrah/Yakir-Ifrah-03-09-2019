@@ -3,10 +3,10 @@ import * as actionTypes from './actionTypes';
 import store from 'store';
 
 
-export const requstData = (locatinKey) => {
-    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
-    const CURRENT_WEATHER_URL = `dataservice.accuweather.com/currentconditions/v1/${locatinKey}?apikey=${API_KEY}`;
-    const WEATHER_FORECASTS_URL = `dataservice.accuweather.com/forecasts/v1/daily/5day/${locatinKey}?apikey=${API_KEY}`;
+export const requestData = (locationKey) => {
+    const API_KEY = `SrTwdFFwO2YfqdquDgzrLwbZ9f7GoI2i`;
+    const CURRENT_WEATHER_URL = `dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`;
+    const WEATHER_FORECASTS_URL = `dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`;
     return (dispatch, getState) => {
         dispatch(requestPending())
         axios.all([
@@ -21,20 +21,20 @@ export const requstData = (locatinKey) => {
             const newCurrentCity = getState().currentCity;
             newCurrentCity.temp = currentTemp;
             newCurrentCity.text = WeatherText;
-            newCurrentCity.locatinKey = locatinKey;
+            newCurrentCity.locationKey = locationKey;
             newCurrentCity.icon = WeatherIcon
             if (store.get('favoriteCities') !== undefined) {
                 if (Object.getOwnPropertyNames(store.get('favoriteCities')).length > 0) {
                     const favoriteCities = store.get('favoriteCities');
-                    if (locatinKey in favoriteCities) {
-                        newCurrentCity.name = favoriteCities[locatinKey].name;
+                    if (locationKey in favoriteCities) {
+                        newCurrentCity.name = favoriteCities[locationKey].name;
                         newCurrentCity.isFavorite = true;
                     }
 
                 }
             }
 
-            dispatch(requestSucces(newCurrentCity, weatherForecastsList))
+            dispatch(requestSuccess(newCurrentCity, weatherForecastsList))
         })).catch(error => {
             console.log(error);
 
@@ -42,39 +42,39 @@ export const requstData = (locatinKey) => {
                 if (error.response.status !== undefined) {
                     const errCode = error.response.status;
                     if (errCode === 404) {
-                        dispatch(requestFaild(error.response.data));
+                        dispatch(requestFailed(error.response.data));
                     } if (errCode === 503) {
                         console.log('msg: ', error.response.data.Message);
-                        dispatch(requestFaild(error.response.data.Message));
+                        dispatch(requestFailed(error.response.data.Message));
                     }
                     if (errCode === 400) {
                         const err = " Request failed with status code 400";
-                        dispatch(requestFaild(err));
+                        dispatch(requestFailed(err));
                     }
                 } else {
-                    dispatch(requestFaild(JSON.stringify(error.response.data)));
+                    dispatch(requestFailed(JSON.stringify(error.response.data)));
                 }
             }
             else {
                 const err = "Network Error"
-                dispatch(requestFaild(err));
+                dispatch(requestFailed(err));
             }
         });
     }
 }
 
 
-export const requestSucces = (currentCity, weatherForecastsList) => {
+export const requestSuccess = (currentCity, weatherForecastsList) => {
     return {
         type: actionTypes.REQUEST_SUCCESS,
         currentCity: currentCity,
         weatherForecastsList: weatherForecastsList
     }
 }
-export const requestSearchSucces = (detailCitiesSerach, tempCities) => {
+export const requestSearchSuccess = (detailCitiesSearch, tempCities) => {
     return {
         type: actionTypes.REQUEST_AUTOCOMPLETE_SUCCESS,
-        detailCitiesSerach: detailCitiesSerach,
+        detailCitiesSearch: detailCitiesSearch,
         autoCompleteCities: tempCities
     }
 }
@@ -85,15 +85,15 @@ export const requestPending = () => {
     }
 }
 
-export const requestFaild = (error) => {
+export const requestFailed = (error) => {
     return {
-        type: actionTypes.REQUEST_FAILD,
+        type: actionTypes.REQUEST_FAILED,
         error: error
     }
 }
 
 export const toggleFavorite = (currentCity, favoriteCities) => {
-    const key = currentCity.locatinKey;
+    const key = currentCity.locationKey;
     const isFavorite = currentCity.isFavorite;
     if (favoriteCities !== undefined) {
         const objFavoriteCities = favoriteCities
@@ -121,7 +121,7 @@ export const toggleFavorite = (currentCity, favoriteCities) => {
         type: actionTypes.TOGGLE_FAVORITE,
         favoriteCities: favoriteCities,
         currentCity: {
-            locatinKey: key,
+            locationKey: key,
             name: currentCity.name,
             temp: currentCity.temp,
             text: currentCity.text,
@@ -134,8 +134,8 @@ export const toggleFavorite = (currentCity, favoriteCities) => {
 
 
 
-export const setLocationCityKey = (city, currentCity, detailCitiesSerach, favoriteCities) => {
-    let item = detailCitiesSerach.find(element => {
+export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favoriteCities) => {
+    let item = detailCitiesSearch.find(element => {
         if (element.LocalizedName === city) {
             return element;
         }
@@ -146,7 +146,7 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSerach, favori
             return {
                 type: actionTypes.SET_LOCATION_KEY,
                 currentCity: {
-                    locatinKey: item.Key,
+                    locationKey: item.Key,
                     name: city,
                     isFavorite: true,
                     temp: currentCity.temp,
@@ -158,7 +158,7 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSerach, favori
             return {
                 type: actionTypes.SET_LOCATION_KEY,
                 currentCity: {
-                    locatinKey: item.Key,
+                    locationKey: item.Key,
                     name: city,
                     isFavorite: false,
                     temp: currentCity.temp,
@@ -172,7 +172,7 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSerach, favori
         return {
             type: actionTypes.SET_LOCATION_KEY,
             currentCity: {
-                locatinKey: item.Key,
+                locationKey: item.Key,
                 name: city,
                 isFavorite: false,
                 temp: currentCity.temp,
@@ -183,25 +183,25 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSerach, favori
     }
 }
 export const requestAutocompleteCities = input => {
-    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
+    const API_KEY = `SrTwdFFwO2YfqdquDgzrLwbZ9f7GoI2i`;
     const MY_API_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
     return dispatch => {
         dispatch(requestPending())
         axios.get(
             `https://cors-anywhere.herokuapp.com/${MY_API_URL}`,
         ).then(res => {
-            let detailCitiesSerach = res.data;
+            let detailCitiesSearch = res.data;
             let tempCities = res.data.map(item => item.LocalizedName);
-            dispatch(requestSearchSucces(detailCitiesSerach, tempCities));
+            dispatch(requestSearchSuccess(detailCitiesSearch, tempCities));
         }).catch(error => {
             if (error.response) {
-                dispatch(requestFaild(error.response.data));
+                dispatch(requestFailed(error.response.data));
                 console.log(error.response.status);
                 console.log(error.response.headers);
             } else if (error.request) {
-                dispatch(requestFaild(error.request));
+                dispatch(requestFailed(error.request));
             } else {
-                dispatch(requestFaild(error.message));
+                dispatch(requestFailed(error.message));
                 console.log("Error", error.message);
             }
             console.log(error.config);

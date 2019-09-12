@@ -4,7 +4,6 @@ import './App';
 
 const ProductContext = React.createContext();
 
-//to do: save the cart in the local storage , when the user refresh the page all cart are saved
 class Tprovider extends Component {
 
     state = {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { requstData, toggleFavorite } from "../../../../store/action/index";
+import { requestData, toggleFavorite } from "../../../../store/action/index";
 import store from "store";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -26,25 +26,25 @@ const Main = id => {
 
   useEffect(() => {
     if (Object.getOwnPropertyNames(id).length) {
-      dispatch(requstData(id.id));
+      dispatch(requestData(id.id));
     }
   }, [id]);
 
   useEffect(() => {
     if (!Object.getOwnPropertyNames(id).length) {
-      dispatch(requstData(currentCity.locatinKey));
+      dispatch(requestData(currentCity.locationKey));
     }
-  }, [currentCity.locatinKey]);
+  }, [currentCity.locationKey]);
 
   return (
     <>
       {!error ? (
-        <Container className="main-container mt-2 p-5">
+        <Container className="main-container mt-3 p-5">
           <Row className="mb-3">
             <Col xs={3} md={1} lg={1}>
               <div className="current-weather-city">
                 <img
-                  src={require(`../../../../assets/images/weathericons/${realIcon}.svg`)}
+                  src={require(`../../../../assets/images/weatherIcons/${realIcon}.svg`)}
                   alt="img"
                   className="img-fluid"
                 />

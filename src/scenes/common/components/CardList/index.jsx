@@ -1,8 +1,7 @@
 import React from "react";
-import { CardContiner } from "../Card";
+import { CardContinuer } from "../Card";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { requstData } from "../../../../store/action";
 
 import _ from "lodash";
 
@@ -28,7 +27,6 @@ const CardList = ({ data, msg, history }) => {
   };
 
   const handleClickCard = id => {
-    // await dispatch(requstData(id));
     history.push({
       pathname: "/",
       state: { locationKey: id }
@@ -39,7 +37,7 @@ const CardList = ({ data, msg, history }) => {
       {msg === "weatherForecastsList"
         ? data.map((item, index) => {
             return (
-              <CardContiner
+              <CardContinuer
                 key={index}
                 header={getWeekday(new Date(item.Date))}
                 temp={getTempC(item.Temperature)}
@@ -48,7 +46,7 @@ const CardList = ({ data, msg, history }) => {
           })
         : data.map((item, index) => {
             return (
-              <CardContiner
+              <CardContinuer
                 key={index}
                 header={item.name}
                 temp={item.temp}

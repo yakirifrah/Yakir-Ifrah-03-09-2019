@@ -4,7 +4,6 @@ import store from "store";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CardDeck from "react-bootstrap/CardDeck";
-import Container from "react-bootstrap/Container";
 
 import Title from "../common/components/Title";
 import CardList from "../common/components/CardList";
@@ -28,14 +27,14 @@ export default function Favorite() {
           </Col>
         </Row>
       ) : (
-        <Container className="fav-section text-center">
-          <CardDeck className="pt-5 justify-content-center">
+        <Row className="fav-section justify-content-center">
+          <CardDeck className="pt-5 text-center">
             <CardList
               data={Object.values(listFavoriteCities)}
               msg="listFavoriteCities"
             />
           </CardDeck>
-        </Container>
+        </Row>
       )}
     </>
   );

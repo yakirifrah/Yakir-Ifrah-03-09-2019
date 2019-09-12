@@ -5,9 +5,9 @@ const initialState = {
     error: null,
     loading: false,
     autoCompleteCities: [],
-    detailCitiesSerach: [],
+    detailCitiesSearch: [],
     currentCity: {
-        locatinKey: '215854',
+        locationKey: '215854',
         name: 'tel aviv',
         temp: null,
         text: null,
@@ -15,7 +15,7 @@ const initialState = {
         icon: 34
     },
 }
-const requsetPending = (state, action) => {
+const requestPending = (state, action) => {
     return updateObject(state, {
         error: null,
         loading: true,
@@ -32,7 +32,7 @@ const requestSuccess = (state, action) => {
     })
 }
 
-const requsetFaild = (state, action) => {
+const requestFailed = (state, action) => {
     return updateObject(state, {
         error: action.error,
         loading: false
@@ -44,7 +44,7 @@ const requestAutocompleteSuccess = (state, action) => {
     return updateObject(state, {
         error: null,
         loading: false,
-        detailCitiesSerach: action.detailCitiesSerach,
+        detailCitiesSearch: action.detailCitiesSearch,
         autoCompleteCities: action.autoCompleteCities
     });
 }
@@ -69,9 +69,9 @@ const setLocationKey = (state, action) => {
 
 export const rootReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.REQUEST_PENDING: return requsetPending(state, action);
+        case actionTypes.REQUEST_PENDING: return requestPending(state, action);
         case actionTypes.REQUEST_SUCCESS: return requestSuccess(state, action);
-        case actionTypes.REQUEST_FAILD: return requsetFaild(state, action);
+        case actionTypes.REQUEST_FAILED: return requestFailed(state, action);
         case actionTypes.REQUEST_AUTOCOMPLETE_SUCCESS: return requestAutocompleteSuccess(state, action);
         case actionTypes.TOGGLE_FAVORITE: return toggleFavorite(state, action);
         case actionTypes.SET_LOCATION_KEY: return setLocationKey(state, action);

@@ -3,9 +3,11 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
+import { ButtonContainer } from "../Button";
+import Slider from "../Slider";
 import "./style.scss";
 function Navigation() {
-  const items = ["Home", "Favorite"];
+  const items = ["Home", "Favorite", "Switch Theme"];
   return (
     <Container fluid className="nav-bar">
       <Navbar sticky="top">
@@ -15,14 +17,26 @@ function Navigation() {
           <Nav className="ml-auto">
             {items.map((item, index) => {
               return (
-                <Nav.Item key={index}>
-                  <Link
-                    className="stlye-text"
-                    to={item === "Home" ? "/" : `/${item}`}
-                  >
-                    {item}
-                  </Link>
-                </Nav.Item>
+                <>
+                  {item === "Home" || item === "Favorite" ? (
+                    <Nav.Item key={index}>
+                      <Link
+                        title={item === "Home" ? "Home" : "Favorite"}
+                        className="style-text"
+                        to={item === "Home" ? "/" : `/${item}`}
+                      >
+                        {item}
+                      </Link>
+                    </Nav.Item>
+                  ) : (
+                    <Nav.Item title="switch theme" key={index}>
+                      <div className="d-flex justify-content-center">
+                        <Slider />
+                        <label className="pl-3 style-text">{item}</label>
+                      </div>
+                    </Nav.Item>
+                  )}
+                </>
               );
             })}
           </Nav>
