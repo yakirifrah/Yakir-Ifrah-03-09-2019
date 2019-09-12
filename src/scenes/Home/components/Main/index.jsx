@@ -44,7 +44,7 @@ const Main = id => {
             <Col xs={3} md={1} lg={1}>
               <div className="current-weather-city">
                 <img
-                  src={require(`../../../../assets/images/weatherIcons/${realIcon}.svg`)}
+                  src={require(`../../../../assets/images/weathericons/${realIcon}.svg`)}
                   alt="img"
                   className="img-fluid"
                 />
