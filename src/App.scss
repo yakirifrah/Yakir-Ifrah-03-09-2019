@@ -14,10 +14,10 @@ App {
 }
 
 
-.container-fluid {
-  margin: 0px !important;
-  padding: 0px !important;
-}
+// .container-fluid {
+//   margin: 0px !important;
+//   padding: 0px !important;
+// }
 
 .day {
   color: $mainBlack;
@@ -51,8 +51,16 @@ App {
   &.night {
     height: 100% !important;
     width: 100% !important;
+    margin: 0px !important;
+    padding: 0px !important;
   }
 
+  &.container-fluid {
+    margin: 0px !important;
+    padding: 0px !important;
+    height: 100%;
+
+  }
 }
 
 // Medium devices (tablets, 768px and up)
@@ -60,8 +68,15 @@ App {
 
   .container-fluid &.day,
   &.night {
-    height: 100% !important;
-    width: 100% !important;
+    height: 100vh !important;
+    width: 100vw !important;
+  }
+
+  &.container-fluid {
+    margin: 0px !important;
+    padding: 0px !important;
+    height: 100vh;
+
   }
 
 }
@@ -74,6 +89,13 @@ App {
     height: 100vh !important;
     width: 100vw !important;
   }
+
+  &.container-fluid {
+    margin: 0px !important;
+    padding: 0px !important;
+    height: 100vh;
+
+  }
 }
 
 // Extra large devices (large desktops, 1200px and up)
@@ -84,15 +106,15 @@ App {
     height: 100vh !important;
     width: 100vw !important;
   }
-}
 
-.container-fluid {
-
-  &.day,
-  &.night {
+  &.container-fluid {
+    margin: 0px !important;
+    padding: 0px !important;
     height: 100vh;
+
   }
 }
+
 
 
 
