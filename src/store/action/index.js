@@ -4,7 +4,8 @@ import store from 'store';
 
 
 export const requestData = (locationKey) => {
-    const API_KEY = `SrTwdFFwO2YfqdquDgzrLwbZ9f7GoI2i`;
+    console.log('fetch data');
+    const API_KEY = `Zz5x18nn2DwbYFUPGFl0VTN4Ssr1w1QY`;
     const CURRENT_WEATHER_URL = `dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`;
     const WEATHER_FORECASTS_URL = `dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`;
     return (dispatch, getState) => {
@@ -24,7 +25,7 @@ export const requestData = (locationKey) => {
             newCurrentCity.locationKey = locationKey;
             newCurrentCity.icon = WeatherIcon
             if (store.get('favoriteCities') !== undefined) {
-                if (Object.getOwnPropertyNames(store.get('favoriteCities')).length > 0) {
+                if (Object.getOwnPropertyNames(store.get('favoriteCities')).length) {
                     const favoriteCities = store.get('favoriteCities');
                     if (locationKey in favoriteCities) {
                         newCurrentCity.name = favoriteCities[locationKey].name;
@@ -64,10 +65,10 @@ export const requestData = (locationKey) => {
 }
 
 
-export const requestSuccess = (currentCity, weatherForecastsList) => {
+export const requestSuccess = (newCurrentCity, weatherForecastsList) => {
     return {
         type: actionTypes.REQUEST_SUCCESS,
-        currentCity: currentCity,
+        currentCity: newCurrentCity,
         weatherForecastsList: weatherForecastsList
     }
 }
@@ -114,7 +115,6 @@ export const toggleFavorite = (currentCity, favoriteCities) => {
         const constListFavoriteCities = new Object();
         const firstFavoriteCity = { id: key, name: currentCity.name, temp: currentCity.temp, text: currentCity.text, isFavorite: true };
         constListFavoriteCities[key] = firstFavoriteCity
-        console.log('first fav: ', constListFavoriteCities);
         store.set('favoriteCities', constListFavoriteCities);
     }
     return {
@@ -142,7 +142,7 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favori
     });
 
     if (favoriteCities !== undefined) {
-        if (Object.getOwnPropertyNames(favoriteCities).length > 0 && item.Key in favoriteCities) {
+        if (Object.getOwnPropertyNames(favoriteCities).length && item.Key in favoriteCities) {
             return {
                 type: actionTypes.SET_LOCATION_KEY,
                 currentCity: {
@@ -183,7 +183,7 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favori
     }
 }
 export const requestAutocompleteCities = input => {
-    const API_KEY = `SrTwdFFwO2YfqdquDgzrLwbZ9f7GoI2i`;
+    const API_KEY = `Zz5x18nn2DwbYFUPGFl0VTN4Ssr1w1QY`;
     const MY_API_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
     return dispatch => {
         dispatch(requestPending())

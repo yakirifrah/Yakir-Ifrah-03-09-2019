@@ -1,34 +1,27 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import './App';
 
 
-const ProductContext = React.createContext();
+const ThemeContext = React.createContext();
 
-class Tprovider extends Component {
+const ThemeProvider = (props) => {
+    const [theme, setTheme] = useState("day");
 
-    state = {
-        theme: "day",
-        toggleTheme: this.toggleTheme
+    const toggleTheme = evt => {
+        setTheme(evt.target.checked ? "night" : "day")
     };
 
-    toggleTheme = evt => {
-        this.setState({ theme: evt.target.checked ? "night" : "day" });
-    };
-
-    render() {
-        return (
-            <ProductContext.Provider
-                value={{
-                    ...this.state,
-                    toggleTheme: this.toggleTheme
-
-                }}
-            >
-                {this.props.children}
-            </ProductContext.Provider>
-        );
-    }
+    return (
+        <ThemeContext.Provider
+            value={{
+                theme,
+                toggleTheme: toggleTheme
+            }}
+        >
+            {props.children}
+        </ThemeContext.Provider>
+    );
 }
-const ProductConsumer = ProductContext.Consumer;
+const ThemeConsumer = ThemeContext.Consumer;
 
-export { Tprovider, ProductConsumer };
+export { ThemeProvider, ThemeConsumer, ThemeContext };

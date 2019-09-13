@@ -13,7 +13,7 @@
   &.nav-bar {
     padding-right: 0px;
     padding-left: 0px;
-    height: 10vh;
+    height: fit-content;
   }
 }
 
@@ -24,8 +24,8 @@ h5 {
 }
 
 .nav-item {
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .style-text {

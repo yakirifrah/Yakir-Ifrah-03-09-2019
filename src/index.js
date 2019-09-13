@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import 'bootstrap/scss/bootstrap.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import "react-toggle/style.css";
 
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
@@ -11,7 +13,7 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { rootReducer } from './store/reducer';
-import { Tprovider } from './context';
+import { ThemeProvider } from './context';
 
 const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(rootReducer, composeEnhances(
@@ -19,11 +21,11 @@ const store = createStore(rootReducer, composeEnhances(
 
 ReactDOM.render(
     <Provider store={store}>
-        <Tprovider>
+        <ThemeProvider>
             <BrowserRouter>
                 <App />
             </BrowserRouter>
-        </Tprovider>
+        </ThemeProvider>
     </Provider>
     , document.getElementById('root'));
 serviceWorker.unregister();

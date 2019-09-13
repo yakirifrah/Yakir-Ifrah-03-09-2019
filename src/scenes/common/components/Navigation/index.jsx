@@ -3,7 +3,6 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
-import { ButtonContainer } from "../Button";
 import Slider from "../Slider";
 import "./style.scss";
 function Navigation() {
@@ -17,9 +16,9 @@ function Navigation() {
           <Nav className="ml-auto">
             {items.map((item, index) => {
               return (
-                <>
+                <React.Fragment key={index}>
                   {item === "Home" || item === "Favorite" ? (
-                    <Nav.Item key={index}>
+                    <Nav.Item>
                       <Link
                         title={item === "Home" ? "Home" : "Favorite"}
                         className="style-text"
@@ -29,14 +28,14 @@ function Navigation() {
                       </Link>
                     </Nav.Item>
                   ) : (
-                    <Nav.Item title="switch theme" key={index}>
+                    <Nav.Item title="switch theme">
                       <div className="d-flex justify-content-center">
                         <Slider />
                         <label className="pl-3 style-text">{item}</label>
                       </div>
                     </Nav.Item>
                   )}
-                </>
+                </React.Fragment>
               );
             })}
           </Nav>

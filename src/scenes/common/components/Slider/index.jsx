@@ -1,19 +1,24 @@
 import React from "react";
-import { ProductConsumer } from "../../../../context";
+import { ThemeConsumer } from "../../../../context";
 import "./style.scss";
+import Toggle from "react-toggle";
+import Dark from "../../../../assets/images/SwitchToggle/dark.png";
+import Light from "../../../../assets/images/SwitchToggle/light.png";
 const Slider = () => {
   return (
     <label className="switch">
-      <ProductConsumer>
+      <ThemeConsumer>
         {({ toggleTheme, theme }) => (
-          <input
+          <Toggle
             onChange={toggleTheme}
-            type="checkbox"
             checked={theme === "night"}
+            icons={{
+              checked: <img src={Light} alt="lignt" className="img-fluid" />,
+              unchecked: <img src={Dark} alt="dark" className="img-fluid" />
+            }}
           />
         )}
-      </ProductConsumer>
-      <span className="slider round" />
+      </ThemeConsumer>
     </label>
   );
 };

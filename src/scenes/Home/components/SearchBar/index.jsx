@@ -3,6 +3,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   requestAutocompleteCities,
@@ -10,15 +11,16 @@ import {
 } from "../../../../store/action";
 import _ from "lodash";
 
+import store from "store";
 import styled from "styled-components";
 
 export default function SearchBar() {
   const autoCompleteCities = useSelector(state => state.autoCompleteCities);
   const detailCitiesSearch = useSelector(state => state.detailCitiesSearch);
   const currentCity = useSelector(state => state.currentCity);
-  const favoriteCities = useSelector(state => state.favoriteCities);
+  const favoriteCities = store.get("favoriteCities");
 
-  const isLoading = useSelector(state => state.isLoading);
+  const isLoading = useSelector(state => state.loading);
 
   const dispatch = useDispatch();
   const handleSearch = _.debounce(async query => {

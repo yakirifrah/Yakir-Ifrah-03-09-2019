@@ -1,7 +1,10 @@
-body {
+@import './scenes/common/variables.scss';
+
+body,
+html {
   overflow-x: hidden;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
 }
 
 App {
@@ -17,13 +20,70 @@ App {
 }
 
 .day {
-  color: black;
-  background-color: white;
+  color: $mainBlack;
+  background-color: $mainWhite;
 }
 
 .night {
-  color: #5692e6;
-  background-color: #142b41;
+  color: $mainWhite;
+  background-color: $mainBlack;
+}
+
+
+
+
+// Extra small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap
+// @media (min-width: 1px) {
+
+//   .container-fluid &.day,
+//   &.night {
+//     height: 100% !important;
+//     width: 100% !important;
+//   }
+
+// }
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+
+  .container-fluid &.day,
+  &.night {
+    height: 100% !important;
+    width: 100% !important;
+  }
+
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+
+  .container-fluid &.day,
+  &.night {
+    height: 100% !important;
+    width: 100% !important;
+  }
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+
+  .container-fluid &.day,
+  &.night {
+    height: 100vh !important;
+    width: 100vw !important;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+
+  .container-fluid &.day,
+  &.night {
+    height: 100vh !important;
+    width: 100vw !important;
+  }
 }
 
 .container-fluid {
@@ -33,6 +93,34 @@ App {
     height: 100vh;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .container-fluid {
+
+//   &.day,
+//   &.night {
+//     height: 100vh;
+//     width: 100vw;
+//   }
+// }
+
 
 span {
   color: black;

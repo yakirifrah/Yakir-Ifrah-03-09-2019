@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { requestData, toggleFavorite } from "../../../../store/action/index";
 import store from "store";
@@ -9,9 +9,11 @@ import CardDeck from "react-bootstrap/CardDeck";
 import Title from "../../../common/components/Title";
 import { ButtonContainer } from "../../../common/components/Button";
 import { ContainerModal as Modal } from "../Modal";
-import CardList from "../../../common/components/CardList";
 
+import CardList from "../../../common/components/CardList";
+import Loader from "react-loader-spinner";
 import "./style.scss";
+
 const Main = id => {
   const error = useSelector(state => state.error);
   const currentCity = useSelector(state => state.currentCity);
@@ -38,55 +40,74 @@ const Main = id => {
 
   return (
     <>
-      {!error ? (
-        <Container className="main-container mt-3 p-5">
-          <Row className="mb-3">
-            <Col xs={3} md={1} lg={1}>
-              <div className="current-weather-city">
-                <img
-                  src={require(`../../../../assets/images/weathericons/${realIcon}.svg`)}
-                  alt="img"
-                  className="img-fluid"
-                />
-              </div>
-            </Col>
-            <Col xs={3} md={3}>
-              <Title name={currentCity.name} />
-              <div className="temp">
-                <p className="current-weather">current-weather</p>
-                <span className="high"> {currentCity.temp}&#8451;</span>
-              </div>
-            </Col>
-            <Col md={{ span: 3, offset: 5 }} className="padding-fav">
-              <div className="d-flex justify-content-center align-items-center">
-                <i
-                  className={
-                    currentCity.isFavorite
-                      ? "fas fa-heart fa-3x"
-                      : "far fa-heart fa-3x"
-                  }
-                />
-                <ButtonContainer
-                  onClick={() => {
-                    dispatch(toggleFavorite(currentCity, favoriteCities));
-                  }}
-                >
-                  Add to favorite
-                </ButtonContainer>
-              </div>
-            </Col>
+      {useSelector(state => state.loading) ? (
+        <Container className={`main-container mt-3 p-5`}>
+          <Row className="mb-3 justify-content-center">
+            <Loader
+              type="CradleLoader"
+              color="#00BFFF"
+              height={100}
+              width={100}
+              timeout={3000} //3 secs
+            />
           </Row>
-          <Row className="justify-content-center">
-            <Title name={currentCity.text} />
-          </Row>
-          <CardDeck className="pt-5 justify-content-center">
-            <CardList data={weatherForecastsList} msg="weatherForecastsList" />
-          </CardDeck>
         </Container>
       ) : (
-        <Container className="text-center">
-          <Modal title="error" msg={error} />
-        </Container>
+        <>
+          {!error ? (
+            <Container className={`main-container mt-3 p-5`}>
+              <Row className="mb-3">
+                <Col xs={3} md={1} lg={1}>
+                  <div className="current-weather-city">
+                    <img
+                      src={require(`../../../../assets/images/weathericons/${realIcon}.svg`)}
+                      alt="img"
+                      className="img-fluid"
+                    />
+                  </div>
+                </Col>
+                <Col xs={3} md={3}>
+                  <Title name={currentCity.name} />
+                  <div className="temp">
+                    <p className="current-weather">current-weather</p>
+                    <span className="high"> {currentCity.temp}&#8451;</span>
+                  </div>
+                </Col>
+                <Col md={{ span: 3, offset: 5 }} className="padding-fav">
+                  <div className="d-flex justify-content-center align-items-center">
+                    <i
+                      className={
+                        currentCity.isFavorite
+                          ? "fas fa-heart fa-3x"
+                          : "far fa-heart fa-3x"
+                      }
+                    />
+                    <ButtonContainer
+                      onClick={() => {
+                        dispatch(toggleFavorite(currentCity, favoriteCities));
+                      }}
+                    >
+                      Add to favorite
+                    </ButtonContainer>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="justify-content-center">
+                <Title name={currentCity.text} />
+              </Row>
+              <CardDeck className="pt-5 justify-content-center">
+                <CardList
+                  data={weatherForecastsList}
+                  msg="weatherForecastsList"
+                />
+              </CardDeck>
+            </Container>
+          ) : (
+            <Container className="text-center">
+              <Modal title="error" msg={error} />
+            </Container>
+          )}
+        </>
       )}
     </>
   );

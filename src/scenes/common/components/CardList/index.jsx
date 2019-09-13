@@ -1,13 +1,10 @@
 import React from "react";
 import { CardContinuer } from "../Card";
-import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import _ from "lodash";
 
 const CardList = ({ data, msg, history }) => {
-  const dispatch = useDispatch();
-
   const getWeekday = day => {
     var weekday = new Array(7);
     weekday[0] = "Sun";
