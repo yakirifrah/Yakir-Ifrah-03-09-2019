@@ -58,15 +58,13 @@ const Main = id => {
             <Container className={`main-container mt-3 p-5`}>
               <Row className="mb-3">
                 <Col xs={3} md={1} lg={1}>
-                  <div className="current-weather-city">
-                    <img
-                      src={require(`../../../../assets/images/weathericons/${realIcon}.svg`)}
-                      alt="img"
-                      className="img-fluid"
-                    />
-                  </div>
+                  <img
+                    src={require(`../../../../assets/images/weathericons/${realIcon}.svg`)}
+                    alt="img"
+                    className="img-fluid"
+                  />
                 </Col>
-                <Col xs={3} md={3}>
+                <Col xs={1} md={3} lg={3}>
                   <Title name={currentCity.name} />
                   <div className="temp">
                     <p className="current-weather">current-weather</p>
@@ -93,7 +91,9 @@ const Main = id => {
                 </Col>
               </Row>
               <Row className="justify-content-center">
-                <Title name={currentCity.text} />
+                <Col lg={12} xs={12} md={12} className="text-center">
+                  <Title name={currentCity.text} />
+                </Col>
               </Row>
               <CardDeck className="pt-5 justify-content-center">
                 <CardList
