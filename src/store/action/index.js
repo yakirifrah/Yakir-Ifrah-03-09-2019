@@ -4,8 +4,7 @@ import store from 'store';
 
 
 export const requestData = (locationKey) => {
-    console.log('fetch data');
-    const API_KEY = `Zz5x18nn2DwbYFUPGFl0VTN4Ssr1w1QY`;
+    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
     const CURRENT_WEATHER_URL = `dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`;
     const WEATHER_FORECASTS_URL = `dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`;
     return (dispatch, getState) => {
@@ -26,30 +25,29 @@ export const requestData = (locationKey) => {
             newCurrentCity.icon = WeatherIcon
             if (store.get('favoriteCities') !== undefined) {
                 if (Object.getOwnPropertyNames(store.get('favoriteCities')).length) {
-                    const favoriteCities = store.get('favoriteCities');
+                    const favoriteCities = store.get('favoriteCities'); // get local storage with key=> favoriteCities
                     if (locationKey in favoriteCities) {
                         newCurrentCity.name = favoriteCities[locationKey].name;
                         newCurrentCity.isFavorite = true;
                     }
-
                 }
             }
-
             dispatch(requestSuccess(newCurrentCity, weatherForecastsList))
         })).catch(error => {
             console.log(error);
-
             if (error.response !== undefined) {
                 if (error.response.status !== undefined) {
                     const errCode = error.response.status;
                     if (errCode === 404) {
                         dispatch(requestFailed(error.response.data));
-                    } if (errCode === 503) {
+                    } else if (errCode === 503) {
                         console.log('msg: ', error.response.data.Message);
                         dispatch(requestFailed(error.response.data.Message));
-                    }
-                    if (errCode === 400) {
+                    } else if (errCode === 400) {
                         const err = " Request failed with status code 400";
+                        dispatch(requestFailed(err));
+                    } else {
+                        const err = `Request failed with status code 400 ${errCode}`;
                         dispatch(requestFailed(err));
                     }
                 } else {
@@ -183,7 +181,7 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favori
     }
 }
 export const requestAutocompleteCities = input => {
-    const API_KEY = `Zz5x18nn2DwbYFUPGFl0VTN4Ssr1w1QY`;
+    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
     const MY_API_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
     return dispatch => {
         dispatch(requestPending())
@@ -194,17 +192,30 @@ export const requestAutocompleteCities = input => {
             let tempCities = res.data.map(item => item.LocalizedName);
             dispatch(requestSearchSuccess(detailCitiesSearch, tempCities));
         }).catch(error => {
-            if (error.response) {
-                dispatch(requestFailed(error.response.data));
-                console.log(error.response.status);
-                console.log(error.response.headers);
-            } else if (error.request) {
-                dispatch(requestFailed(error.request));
-            } else {
-                dispatch(requestFailed(error.message));
-                console.log("Error", error.message);
+            console.log(error);
+            if (error.response !== undefined) {
+                if (error.response.status !== undefined) {
+                    const errCode = error.response.status;
+                    if (errCode === 404) {
+                        dispatch(requestFailed(error.response.data));
+                    } else if (errCode === 503) {
+                        console.log('msg: ', error.response.data.Message);
+                        dispatch(requestFailed(error.response.data.Message));
+                    } else if (errCode === 400) {
+                        const err = " Request failed with status code 400";
+                        dispatch(requestFailed(err));
+                    } else {
+                        const err = `Request failed with status code 400 ${errCode}`;
+                        dispatch(requestFailed(err));
+                    }
+                } else {
+                    dispatch(requestFailed(JSON.stringify(error.response.data)));
+                }
             }
-            console.log(error.config);
-        })
+            else {
+                const err = "Network Error"
+                dispatch(requestFailed(err));
+            }
+        });
     }
 }

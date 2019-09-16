@@ -1,16 +1,8 @@
 import React from "react";
 import Pagination from "react-bootstrap/Pagination";
-export const PaginationContainer = ({
-  favoriteListPerPage,
-  totalFavoriteList,
-  paginate
-}) => {
+export const PaginationContainer = ({ favoriteListPerPage, totalFavoriteList, paginate }) => {
   const pageNumbers = [];
-  for (
-    let number = 1;
-    number <= Math.ceil(totalFavoriteList / favoriteListPerPage);
-    number++
-  ) {
+  for (let number = 1; number <= Math.ceil(totalFavoriteList / favoriteListPerPage); number++) {
     pageNumbers.push(
       <Pagination.Item
         onClick={() => {
@@ -24,11 +16,7 @@ export const PaginationContainer = ({
   }
   const pagination = (
     <>
-      <Pagination>
-        <Pagination.First />
-        <Pagination.Prev />
-        {pageNumbers}
-      </Pagination>
+      <Pagination>{pageNumbers}</Pagination>
     </>
   );
 

@@ -22,9 +22,7 @@ const Main = id => {
   const dispatch = useDispatch();
   var nameOfImg = [1.1, 1, 2.0, 2.1, 2, 3, 4, 7, 12, 15, 33, 34, 35];
   const icon = useSelector(state => state.currentCity.icon);
-  const realIcon = nameOfImg.includes(icon)
-    ? icon
-    : nameOfImg[Math.floor(Math.random() * nameOfImg.length)];
+  const realIcon = nameOfImg.includes(icon) ? icon : nameOfImg[Math.floor(Math.random() * nameOfImg.length)];
 
   useEffect(() => {
     if (Object.getOwnPropertyNames(id).length) {
@@ -75,9 +73,7 @@ const Main = id => {
                   <div className="d-flex justify-content-center align-items-center">
                     <i
                       className={
-                        currentCity.isFavorite
-                          ? "fas fa-heart fa-3x"
-                          : "far fa-heart fa-3x"
+                        currentCity.isFavorite ? "fas fa-heart fa-3x animated heartBeat" : "far fa-heart fa-3x"
                       }
                     />
                     <ButtonContainer
@@ -92,14 +88,11 @@ const Main = id => {
               </Row>
               <Row className="justify-content-center">
                 <Col lg={12} xs={12} md={12} className="text-center">
-                  <Title name={currentCity.text} />
+                  <Title name={currentCity.text} styleText="springy-text" />
                 </Col>
               </Row>
               <CardDeck className="pt-5 justify-content-center">
-                <CardList
-                  data={weatherForecastsList}
-                  msg="weatherForecastsList"
-                />
+                <CardList data={weatherForecastsList} msg="weatherForecastsList" />
               </CardDeck>
             </Container>
           ) : (

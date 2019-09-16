@@ -1,13 +1,22 @@
-@import '../common/variables.scss';
 
-
-
-.fas.fa-heart {
-    color: $mainRed;
-}
 
 footer {
     position: fixed;
-    bottom: 0;
-    right: 50%;
+    bottom: 1%;
+    left: 4%;
+}
+
+.fav-section {
+    animation: pageTransition 1.2s ease-in-out 1;
+    -webkit-animation: pageTransition 1.2s ease-in-out 1;
+}
+
+@keyframes pageTransition {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
 }

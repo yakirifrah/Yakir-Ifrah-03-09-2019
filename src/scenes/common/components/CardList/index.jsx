@@ -2,8 +2,6 @@ import React from "react";
 import { CardContinuer } from "../Card";
 import { withRouter } from "react-router-dom";
 
-import _ from "lodash";
-
 const CardList = ({ data, msg, history }) => {
   const getWeekday = day => {
     var weekday = new Array(7);
@@ -34,11 +32,7 @@ const CardList = ({ data, msg, history }) => {
       {msg === "weatherForecastsList"
         ? data.map((item, index) => {
             return (
-              <CardContinuer
-                key={index}
-                header={getWeekday(new Date(item.Date))}
-                temp={getTempC(item.Temperature)}
-              />
+              <CardContinuer key={index} header={getWeekday(new Date(item.Date))} temp={getTempC(item.Temperature)} />
             );
           })
         : data.map((item, index) => {

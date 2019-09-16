@@ -23,8 +23,7 @@ export default function Favorite() {
     const testFavoriteListEmpty = listFavoriteCities => {
       setFavoriteListRequest({ loading: true });
       if (
-        (listFavoriteCities !== undefined &&
-          Object.getOwnPropertyNames(listFavoriteCities).length === 0) ||
+        (listFavoriteCities !== undefined && Object.getOwnPropertyNames(listFavoriteCities).length === 0) ||
         listFavoriteCities === undefined
       ) {
         setFavoriteListRequest({ loading: false, favoriteList: null });
@@ -40,13 +39,9 @@ export default function Favorite() {
   const { loading, favoriteList } = favoriteListRequest;
 
   const indexOfLastFavoriteList = currentPage * favoriteListPerPage;
-  const indexOfFirstFavoriteList =
-    indexOfLastFavoriteList - favoriteListPerPage;
+  const indexOfFirstFavoriteList = indexOfLastFavoriteList - favoriteListPerPage;
 
-  const currentFavoriteList = favoriteList.slice(
-    indexOfFirstFavoriteList,
-    indexOfLastFavoriteList
-  );
+  const currentFavoriteList = favoriteList.slice(indexOfFirstFavoriteList, indexOfLastFavoriteList);
 
   const handlePaginte = pageNumber => setCurrentPage(pageNumber);
 
@@ -61,13 +56,7 @@ export default function Favorite() {
         <>
           <Row className="text-center mt-5">
             <Col xs={12} md={12} lg={12}>
-              <Loader
-                type="CradleLoader"
-                color="#00BFFF"
-                height={100}
-                width={100}
-                timeout={3000}
-              />
+              <Loader type="CradleLoader" color="#00BFFF" height={100} width={100} timeout={3000} />
             </Col>
           </Row>
         </>
@@ -85,10 +74,7 @@ export default function Favorite() {
             <>
               <Row className="fav-section justify-content-center">
                 <CardDeck className="pt-5 text-center">
-                  <CardList
-                    data={currentFavoriteList}
-                    msg="listFavoriteCities"
-                  />
+                  <CardList data={currentFavoriteList} msg="listFavoriteCities" />
                 </CardDeck>
               </Row>
 

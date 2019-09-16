@@ -1,23 +1,25 @@
+# Weather App
 
-## Weather App
+> Weather Forecasting App gives you an easy way to Know the weather of some city
 
-Weather Forecasting App gives you an easy way to Know the weather of some city and more
+All data from AccuWeather API. <https://developer.accuweather.com/>
 
-All data from ​AccuWeather API​. https://developer.accuweather.com/
+## getting start
 
-
-
-## geting start
-
+```
 - Clone this repo
 - npm install
 - npm start
+```
 
-## Deployment 
+## Deployment
 
-Deploy app in Heroku server  ​​ https://my-weather-app-by-herolo.herokuapp.com/
+```
+Deploy app in Heroku server
+```
 
-Enjoy:)
+<https://my-weather-app-by-herolo.herokuapp.com>
 
 ## Authors
+
 - yakirifrah

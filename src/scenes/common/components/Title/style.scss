@@ -7,3 +7,23 @@
     letter-spacing: 0.3rem;
     text-transform: uppercase;
 }
+
+.springy-text {
+    animation-name: springy-text;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+}
+
+@keyframes springy-text {
+    0% {
+        letter-spacing: 1.2em;
+    }
+
+    100% {
+        letter-spacing: 0.1em;
+    }
+}

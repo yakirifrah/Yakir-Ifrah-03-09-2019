@@ -6,4 +6,22 @@
     min-height: 50vh;
     flex-wrap: wrap;
     box-shadow: 0px 16px 9px -8px $mainShadow;
+    animation: pageTransition 1s ease-in-out 1;
+    -webkit-animation: pageTransition 1s ease-in-out 1;
+}
+
+
+
+@keyframes pageTransition {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+.fas.fa-heart {
+    color: $mainRed;
 }
