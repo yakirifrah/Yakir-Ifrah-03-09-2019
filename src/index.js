@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import 'bootstrap/scss/bootstrap.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import "react-toggle/style.css";
 
 import * as serviceWorker from './serviceWorker';

@@ -52,7 +52,6 @@ const requestAutocompleteSuccess = (state, action) => {
 const toggleFavorite = (state, action) => {
     return updateObject(state, {
         currentCity: action.currentCity,
-        isFavorite: !state.currentCity.isFavorite
     })
 }
 

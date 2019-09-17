@@ -7,7 +7,7 @@ import CardDeck from "react-bootstrap/CardDeck";
 import Title from "../common/components/Title";
 import CardList from "../common/components/CardList";
 import { PaginationContainer } from "./components/Pagination";
-import Loader from "react-loader-spinner";
+import ReactLoading from "react-loading";
 
 import "./style.scss";
 export default function Favorite() {
@@ -56,7 +56,7 @@ export default function Favorite() {
         <>
           <Row className="text-center mt-5">
             <Col xs={12} md={12} lg={12}>
-              <Loader type="CradleLoader" color="#00BFFF" height={100} width={100} timeout={3000} />
+              <ReactLoading type={"spinningBubbles"} color={"#7ed6df"} height={"20%"} width={"20%"} />
             </Col>
           </Row>
         </>

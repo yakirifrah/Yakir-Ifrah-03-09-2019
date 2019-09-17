@@ -110,7 +110,7 @@ export const toggleFavorite = (currentCity, favoriteCities) => {
             store.set('favoriteCities', objFavoriteCities);
         }
     } else {
-        const constListFavoriteCities = new Object();
+        const constListFavoriteCities = {};
         const firstFavoriteCity = { id: key, name: currentCity.name, temp: currentCity.temp, text: currentCity.text, isFavorite: true };
         constListFavoriteCities[key] = firstFavoriteCity
         store.set('favoriteCities', constListFavoriteCities);

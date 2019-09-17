@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { requestData, toggleFavorite } from "../../../../store/action/index";
 import store from "store";
@@ -11,7 +11,7 @@ import { ButtonContainer } from "../../../common/components/Button";
 import { ContainerModal as Modal } from "../Modal";
 
 import CardList from "../../../common/components/CardList";
-import Loader from "react-loader-spinner";
+import ReactLoading from "react-loading";
 import "./style.scss";
 
 const Main = id => {
@@ -41,13 +41,7 @@ const Main = id => {
       {useSelector(state => state.loading) ? (
         <Container className={`main-container mt-3 p-5`}>
           <Row className="mb-3 justify-content-center">
-            <Loader
-              type="CradleLoader"
-              color="#00BFFF"
-              height={100}
-              width={100}
-              timeout={3000} //3 secs
-            />
+            <ReactLoading type={"spinningBubbles"} color={"#2c3e50"} height={"20%"} width={"20%"} />
           </Row>
         </Container>
       ) : (
