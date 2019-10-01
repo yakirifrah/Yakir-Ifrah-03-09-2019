@@ -5,43 +5,30 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 
 import { useSelector, useDispatch } from "react-redux";
-import {
-  requestAutocompleteCities,
-  setLocationCityKey
-} from "../../../../store/action";
+import { requestAutocompleteCities, setLocationCityKey } from "../../../../store/action";
 import _ from "lodash";
 
 import store from "store";
 import styled from "styled-components";
 
 export default function SearchBar() {
-  const autoCompleteCities = useSelector(state => state.autoCompleteCities);
-  const detailCitiesSearch = useSelector(state => state.detailCitiesSearch);
-  const currentCity = useSelector(state => state.currentCity);
+  const storeRedux = useSelector(state => state);
   const favoriteCities = store.get("favoriteCities");
-
-  const isLoading = useSelector(state => state.loading);
+  const { autoCompleteCities, detailCitiesSearch, currentCity, loadingAutoComplete } = storeRedux;
 
   const dispatch = useDispatch();
   const handleSearch = _.debounce(async query => {
-    if (query.length === 2) {
+    if (query.length >= 1) {
       await dispatch(requestAutocompleteCities(query));
     }
   }, 350);
 
-  const handleChange = _.debounce(selectedOptions => {
+  const handleChange = _.debounce(async selectedOptions => {
     const selectedCity = selectedOptions[0];
     if (selectedCity) {
-      dispatch(
-        setLocationCityKey(
-          selectedCity,
-          currentCity,
-          detailCitiesSearch,
-          favoriteCities
-        )
-      );
+      await dispatch(setLocationCityKey(selectedCity, currentCity, detailCitiesSearch, favoriteCities));
     }
-  }, 0);
+  }, 350);
 
   return (
     <Styles>
@@ -52,7 +39,8 @@ export default function SearchBar() {
           </InputGroup.Text>
         </InputGroup.Prepend>
         <AsyncTypeahead
-          isLoading={isLoading}
+          isLoading={loadingAutoComplete}
+          minLength={1}
           id="search"
           bsSize="large"
           placeholder="search ..."

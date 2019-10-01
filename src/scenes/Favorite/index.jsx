@@ -16,7 +16,7 @@ export default function Favorite() {
     favoriteList: []
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [favoriteListPerPage, setFavoriteListPerPage] = useState(5);
+  const [favoriteListPerPage] = useState(5);
 
   useEffect(() => {
     const listFavoriteCities = store.get("favoriteCities");

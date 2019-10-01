@@ -14,10 +14,7 @@ App {
 }
 
 
-// .container-fluid {
-//   margin: 0px !important;
-//   padding: 0px !important;
-// }
+
 
 .day {
   color: $mainBlack;
@@ -32,17 +29,7 @@ App {
 
 
 
-// Extra small devices (portrait phones, less than 576px)
-// No media query for `xs` since this is the default in Bootstrap
-// @media (min-width: 1px) {
 
-//   .container-fluid &.day,
-//   &.night {
-//     height: 100% !important;
-//     width: 100% !important;
-//   }
-
-// }
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {

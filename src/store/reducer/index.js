@@ -1,20 +1,31 @@
 import * as actionTypes from '../action/actionTypes';
 import { updateObject } from '../utility';
+
 const initialState = {
     weatherForecastsList: [],
     error: null,
     loading: false,
+    loadingAutoComplete: false,
+    errorAutoComplete: false,
     autoCompleteCities: [],
     detailCitiesSearch: [],
     currentCity: {
-        locationKey: '215854',
-        name: 'tel aviv',
+        locationKey: null,
+        name: null,
         temp: null,
         text: null,
         isFavorite: false,
         icon: 34
     },
+
+    updateCurrentLocation: false
 }
+
+
+
+
+
+
 const requestPending = (state, action) => {
     return updateObject(state, {
         error: null,
@@ -39,11 +50,23 @@ const requestFailed = (state, action) => {
     });
 }
 
+const requestAutoCompletePending = (state, action) => {
+    return updateObject(state, {
+        errorAutoComplete: null,
+        loadingAutoComplete: true
+    })
+}
 
+const requestAutoCompleteFailed = (state, action) => {
+    return updateObject(state, {
+        errorAutoComplete: action.error,
+        loadingAutoComplete: false
+    })
+}
 const requestAutocompleteSuccess = (state, action) => {
     return updateObject(state, {
-        error: null,
-        loading: false,
+        errorAutoComplete: null,
+        loadingAutoComplete: false,
         detailCitiesSearch: action.detailCitiesSearch,
         autoCompleteCities: action.autoCompleteCities
     });
@@ -65,15 +88,29 @@ const setLocationKey = (state, action) => {
 
 
 
+const updateLocation = (state, action) => {
+    return updateObject(state, {
+        currentCity: action.currentCity,
+        updateCurrentLocation: true
+
+    })
+}
+
+
+
+
+
 export const rootReducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.UPDATE_LOCATION: return updateLocation(state, action);
         case actionTypes.REQUEST_PENDING: return requestPending(state, action);
         case actionTypes.REQUEST_SUCCESS: return requestSuccess(state, action);
         case actionTypes.REQUEST_FAILED: return requestFailed(state, action);
+        case actionTypes.REQUEST_AUTOCOMPLETE_PENDING: return requestAutoCompletePending(state, action);
         case actionTypes.REQUEST_AUTOCOMPLETE_SUCCESS: return requestAutocompleteSuccess(state, action);
+        case actionTypes.REQUEST_AUTOCOMPLETE_FAILED: return requestAutoCompleteFailed(state, action);
         case actionTypes.TOGGLE_FAVORITE: return toggleFavorite(state, action);
         case actionTypes.SET_LOCATION_KEY: return setLocationKey(state, action);
-
         default:
             return state;
     }

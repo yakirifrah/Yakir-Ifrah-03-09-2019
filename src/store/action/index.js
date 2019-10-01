@@ -1,119 +1,144 @@
-import axios from 'axios';
-import * as actionTypes from './actionTypes';
-import store from 'store';
+import axios from "axios";
+import * as actionTypes from "./actionTypes";
+import store from "store";
 
-
-export const requestData = (locationKey) => {
-    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
+export const requestData = locationKey => {
+    console.log("request data");
+    const API_KEY = `Zz5x18nn2DwbYFUPGFl0VTN4Ssr1w1QY`;
     const CURRENT_WEATHER_URL = `dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`;
     const WEATHER_FORECASTS_URL = `dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`;
     return (dispatch, getState) => {
-        dispatch(requestPending())
-        axios.all([
-            axios.get(`https://cors-anywhere.herokuapp.com/${CURRENT_WEATHER_URL}`),
-            axios.get(
-                `https://cors-anywhere.herokuapp.com/${WEATHER_FORECASTS_URL}`)
-        ]).then(axios.spread((currentWeather, forecastsWeather) => {
-            const currentTemp = Math.round(currentWeather.data[0].Temperature.Metric.Value);
-            const WeatherText = currentWeather.data[0].WeatherText;
-            const WeatherIcon = currentWeather.data[0].WeatherIcon;
-            const weatherForecastsList = forecastsWeather.data.DailyForecasts;
-            const newCurrentCity = getState().currentCity;
-            newCurrentCity.temp = currentTemp;
-            newCurrentCity.text = WeatherText;
-            newCurrentCity.locationKey = locationKey;
-            newCurrentCity.icon = WeatherIcon
-            if (store.get('favoriteCities') !== undefined) {
-                if (Object.getOwnPropertyNames(store.get('favoriteCities')).length) {
-                    const favoriteCities = store.get('favoriteCities'); // get local storage with key=> favoriteCities
-                    if (locationKey in favoriteCities) {
-                        newCurrentCity.name = favoriteCities[locationKey].name;
-                        newCurrentCity.isFavorite = true;
+        dispatch(requestPending());
+        axios
+            .all([
+                axios.get(`https://cors-anywhere.herokuapp.com/${CURRENT_WEATHER_URL}`),
+                axios.get(`https://cors-anywhere.herokuapp.com/${WEATHER_FORECASTS_URL}`)
+            ])
+            .then(
+                axios.spread((currentWeather, forecastsWeather) => {
+                    const currentTemp = Math.round(currentWeather.data[0].Temperature.Metric.Value);
+                    const WeatherText = currentWeather.data[0].WeatherText;
+                    const WeatherIcon = currentWeather.data[0].WeatherIcon;
+                    const weatherForecastsList = forecastsWeather.data.DailyForecasts;
+                    const newCurrentCity = getState().currentCity;
+                    newCurrentCity.temp = currentTemp;
+                    newCurrentCity.text = WeatherText;
+                    newCurrentCity.locationKey = locationKey;
+                    newCurrentCity.icon = WeatherIcon;
+                    if (store.get("favoriteCities") !== undefined) {
+                        if (Object.getOwnPropertyNames(store.get("favoriteCities")).length) {
+                            const favoriteCities = store.get("favoriteCities"); // get local storage with key=> favoriteCities
+                            if (locationKey in favoriteCities) {
+                                newCurrentCity.name = favoriteCities[locationKey].name;
+                                newCurrentCity.isFavorite = true;
+                            }
+                        }
                     }
-                }
-            }
-            dispatch(requestSuccess(newCurrentCity, weatherForecastsList))
-        })).catch(error => {
-            console.log(error);
-            if (error.response !== undefined) {
-                if (error.response.status !== undefined) {
-                    const errCode = error.response.status;
-                    if (errCode === 404) {
-                        dispatch(requestFailed(error.response.data));
-                    } else if (errCode === 503) {
-                        console.log('msg: ', error.response.data.Message);
-                        dispatch(requestFailed(error.response.data.Message));
-                    } else if (errCode === 400) {
-                        const err = " Request failed with status code 400";
-                        dispatch(requestFailed(err));
+                    dispatch(requestSuccess(newCurrentCity, weatherForecastsList));
+                })
+            )
+            .catch(error => {
+                console.log(error);
+                if (error.response !== undefined) {
+                    if (error.response.status !== undefined) {
+                        const errCode = error.response.status;
+                        if (errCode === 404) {
+                            dispatch(requestFailed(error.response.data));
+                        } else if (errCode === 503) {
+                            console.log("msg: ", error.response.data.Message);
+                            dispatch(requestFailed(error.response.data.Message));
+                        } else if (errCode === 400) {
+                            const err = " Request failed with status code 400";
+                            dispatch(requestFailed(err));
+                        } else {
+                            const err = `Request failed with status code 400 ${errCode}`;
+                            dispatch(requestFailed(err));
+                        }
                     } else {
-                        const err = `Request failed with status code 400 ${errCode}`;
-                        dispatch(requestFailed(err));
+                        dispatch(requestFailed(JSON.stringify(error.response.data)));
                     }
                 } else {
-                    dispatch(requestFailed(JSON.stringify(error.response.data)));
+                    const err = "Network Error";
+                    dispatch(requestFailed(err));
                 }
-            }
-            else {
-                const err = "Network Error"
-                dispatch(requestFailed(err));
-            }
-        });
-    }
-}
-
+            });
+    };
+};
 
 export const requestSuccess = (newCurrentCity, weatherForecastsList) => {
     return {
         type: actionTypes.REQUEST_SUCCESS,
         currentCity: newCurrentCity,
         weatherForecastsList: weatherForecastsList
-    }
-}
+    };
+};
 export const requestSearchSuccess = (detailCitiesSearch, tempCities) => {
     return {
         type: actionTypes.REQUEST_AUTOCOMPLETE_SUCCESS,
         detailCitiesSearch: detailCitiesSearch,
         autoCompleteCities: tempCities
-    }
-}
+    };
+};
 
 export const requestPending = () => {
     return {
         type: actionTypes.REQUEST_PENDING
-    }
-}
-
-export const requestFailed = (error) => {
+    };
+};
+export const requestFailed = error => {
     return {
         type: actionTypes.REQUEST_FAILED,
-        error: error
-    }
-}
+        error
+    };
+};
+
+export const requestAutoCompletePending = () => {
+    return {
+        type: actionTypes.REQUEST_AUTOCOMPLETE_PENDING
+    };
+};
+export const requestAutoCompleteFailed = error => {
+    return {
+        type: actionTypes.REQUEST_AUTOCOMPLETE_FAILED,
+        error
+    };
+};
 
 export const toggleFavorite = (currentCity, favoriteCities) => {
     const key = currentCity.locationKey;
     const isFavorite = currentCity.isFavorite;
     if (favoriteCities !== undefined) {
-        const objFavoriteCities = favoriteCities
+        const objFavoriteCities = favoriteCities;
         if (key in objFavoriteCities) {
             if (!isFavorite) {
                 objFavoriteCities[key].temp = currentCity.temp;
                 objFavoriteCities[key].text = currentCity.text;
             } else {
-                const favoriteCitiesObj = favoriteCities
+                const favoriteCitiesObj = favoriteCities;
                 delete favoriteCitiesObj[key];
-                store.set('favoriteCities', favoriteCitiesObj)
+                store.set("favoriteCities", favoriteCitiesObj);
             }
         } else {
-            objFavoriteCities[key] = { id: key, name: currentCity.name, temp: currentCity.temp, text: currentCity.text, isFavorite: true };
-            store.set('favoriteCities', objFavoriteCities);
+            objFavoriteCities[key] = {
+                id: key,
+                name: currentCity.name,
+                temp: currentCity.temp,
+                text: currentCity.text,
+                isFavorite: true
+            };
+            store.set("favoriteCities", objFavoriteCities);
         }
     } else {
         const constListFavoriteCities = {};
-        const firstFavoriteCity = { id: key, name: currentCity.name, temp: currentCity.temp, text: currentCity.text, isFavorite: true };
-        constListFavoriteCities[key] = firstFavoriteCity
-        store.set('favoriteCities', constListFavoriteCities);
+        const firstFavoriteCity = {
+            id: key,
+            name: currentCity.name,
+            temp: currentCity.temp,
+            text: currentCity.text,
+            isFavorite: true
+        };
+        constListFavoriteCities[key] = firstFavoriteCity;
+        store.set("favoriteCities", constListFavoriteCities);
     }
     return {
         type: actionTypes.TOGGLE_FAVORITE,
@@ -126,18 +151,11 @@ export const toggleFavorite = (currentCity, favoriteCities) => {
             isFavorite: !currentCity.isFavorite,
             icon: currentCity.icon
         }
-    }
-}
-
-
-
+    };
+};
 
 export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favoriteCities) => {
-    let item = detailCitiesSearch.find(element => {
-        if (element.LocalizedName === city) {
-            return element;
-        }
-    });
+    let item = detailCitiesSearch.find(element => (element = element.LocalizedName === city));
 
     if (favoriteCities !== undefined) {
         if (Object.getOwnPropertyNames(favoriteCities).length && item.Key in favoriteCities) {
@@ -151,7 +169,7 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favori
                     text: currentCity.text,
                     icon: currentCity.icon
                 }
-            }
+            };
         } else {
             return {
                 type: actionTypes.SET_LOCATION_KEY,
@@ -163,10 +181,9 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favori
                     text: currentCity.text,
                     icon: currentCity.icon
                 }
-            }
+            };
         }
-    }
-    else {
+    } else {
         return {
             type: actionTypes.SET_LOCATION_KEY,
             currentCity: {
@@ -177,45 +194,65 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favori
                 text: currentCity.text,
                 icon: currentCity.icon
             }
-        }
+        };
     }
-}
+};
 export const requestAutocompleteCities = input => {
-    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
-    const MY_API_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
+    console.log("request auto complete");
+    const API_KEY = `Zz5x18nn2DwbYFUPGFl0VTN4Ssr1w1QY`;
+    const AUTOCOMPLETE_CITIES_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
     return dispatch => {
-        dispatch(requestPending())
-        axios.get(
-            `https://cors-anywhere.herokuapp.com/${MY_API_URL}`,
-        ).then(res => {
-            let detailCitiesSearch = res.data;
-            let tempCities = res.data.map(item => item.LocalizedName);
-            dispatch(requestSearchSuccess(detailCitiesSearch, tempCities));
-        }).catch(error => {
-            console.log(error);
-            if (error.response !== undefined) {
-                if (error.response.status !== undefined) {
-                    const errCode = error.response.status;
-                    if (errCode === 404) {
-                        dispatch(requestFailed(error.response.data));
-                    } else if (errCode === 503) {
-                        console.log('msg: ', error.response.data.Message);
-                        dispatch(requestFailed(error.response.data.Message));
-                    } else if (errCode === 400) {
-                        const err = " Request failed with status code 400";
-                        dispatch(requestFailed(err));
+        dispatch(requestAutoCompletePending());
+        axios
+            .get(`https://cors-anywhere.herokuapp.com/${AUTOCOMPLETE_CITIES_URL}`)
+            .then(res => {
+                let detailCitiesSearch = res.data;
+                let tempCities = res.data.map(item => item.LocalizedName);
+                dispatch(requestSearchSuccess(detailCitiesSearch, tempCities));
+            })
+            .catch(error => {
+                console.log(error);
+                if (error.response !== undefined) {
+                    if (error.response.status !== undefined) {
+                        const errCode = error.response.status;
+                        if (errCode === 404) {
+                            dispatch(requestAutoCompleteFailed(error.response.data));
+                        } else if (errCode === 503) {
+                            console.log("msg: ", error.response.data.Message);
+                            dispatch(requestAutoCompleteFailed(error.response.data.Message));
+                        } else if (errCode === 400) {
+                            const err = " Request failed with status code 400";
+                            dispatch(requestAutoCompleteFailed(err));
+                        } else {
+                            const err = `Request failed with status code 400 ${errCode}`;
+                            dispatch(requestAutoCompleteFailed(err));
+                        }
                     } else {
-                        const err = `Request failed with status code 400 ${errCode}`;
-                        dispatch(requestFailed(err));
+                        dispatch(requestAutoCompleteFailed(JSON.stringify(error.response.data)));
                     }
                 } else {
-                    dispatch(requestFailed(JSON.stringify(error.response.data)));
+                    const err = "Network Error";
+                    dispatch(requestAutoCompleteFailed(err));
                 }
-            }
-            else {
-                const err = "Network Error"
-                dispatch(requestFailed(err));
-            }
-        });
+            });
+    };
+};
+
+
+
+
+
+
+export const locationUpdate = (cityName, locationKey) => {
+
+    return (dispatch, getState) => {
+        const tempCurrentCity = getState().currentCity;
+        tempCurrentCity.locationKey = locationKey;
+        tempCurrentCity.name = cityName;
+        const newCurrentCity = { ...tempCurrentCity }
+        dispatch({
+            type: actionTypes.UPDATE_LOCATION,
+            currentCity: newCurrentCity
+        })
     }
 }
