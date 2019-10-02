@@ -21,7 +21,7 @@ function App() {
       const success = async (position) => {
         const { latitude } = await position.coords;
         const { longitude } = await position.coords;
-        const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
+        const API_KEY = `iAMzJxW63zxiBwJ9PDghyrOmQVJiqGvB`;
         const GEO_LOCATION_URL = `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${API_KEY}&q=${latitude}%2C${longitude}`;
         const FINAL_URL = `https://cors-anywhere.herokuapp.com/${GEO_LOCATION_URL}`;
         axios.get(FINAL_URL)

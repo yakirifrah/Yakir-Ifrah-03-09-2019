@@ -210,7 +210,7 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favori
 };
 export const requestAutocompleteCities = input => {
     console.log("request auto complete");
-    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
+    const API_KEY = `iAMzJxW63zxiBwJ9PDghyrOmQVJiqGvB`;
     const AUTOCOMPLETE_CITIES_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
     return dispatch => {
         dispatch(requestAutoCompletePending());
