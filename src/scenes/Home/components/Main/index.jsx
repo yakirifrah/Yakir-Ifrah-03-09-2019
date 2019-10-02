@@ -37,7 +37,6 @@ const Main = id => {
 		}
 	}, [currentCity.locationKey]);
 	const DEGREE_SYMBOL = degreeSymbolCelsius ? typeSymbol.CELSIUS_SYMBOL : typeSymbol.FAHRENHEIT_SYMBOL;
-	const DEGREE_SYMBOL_BUTTON = degreeSymbolCelsius ? typeSymbol.FAHRENHEIT_SYMBOL : typeSymbol.CELSIUS_SYMBOL;
 
 	return (
 		<>
@@ -70,18 +69,7 @@ const Main = id => {
 										</span>
 									</div>
 								</Col>
-
-								<Col xs={{ span: 1, offset: 3 }} md={{ span: 1, offset: 2 }} lg={{ span: 1, offset: 2 }}>
-									<ButtonContainer
-										onClick={() => {
-											dispatch(toggleDegree());
-										}}
-										paddingStyle
-									>
-										{DEGREE_SYMBOL_BUTTON}
-									</ButtonContainer>
-								</Col>
-								<Col xs={12} md={3} lg={3} className="padding-fav offset-2">
+								<Col xs={12} md={{ span: 3, offset: 5 }} lg={{ span: 3, offset: 5 }} className="padding-fav">
 									<div className="d-flex justify-content-center align-items-center">
 										<i
 											className={
@@ -99,8 +87,18 @@ const Main = id => {
 								</Col>
 							</Row>
 							<Row className="justify-content-center">
-								<Col lg={12} xs={12} md={12} className="text-center">
+								<Col lg={10} xs={10} md={10} className="text-center">
 									<Title name={currentCity.text} styleText="springy-text" />
+								</Col>
+								<Col xs={1} md={1} lg={1}>
+									<ButtonContainer
+										onClick={() => {
+											dispatch(toggleDegree());
+										}}
+										paddingStyle
+									>
+										{DEGREE_SYMBOL}
+									</ButtonContainer>
 								</Col>
 							</Row>
 							<CardDeck className="pt-5 justify-content-center">
