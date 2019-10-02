@@ -30,7 +30,9 @@ function App() {
               throw Error(response.statusText);
             }
             const { data } = response;
-            const { EnglishName } = data.AdministrativeArea;
+            console.log(data);
+
+            const EnglishName = data.EnglishName;
             const { Key } = data;
             dispatch(locationUpdate(EnglishName, Key));
 
