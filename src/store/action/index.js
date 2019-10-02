@@ -4,7 +4,7 @@ import store from "store";
 
 export const requestData = locationKey => {
     console.log("request data");
-    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
+    const API_KEY = `iAMzJxW63zxiBwJ9PDghyrOmQVJiqGvB`;
     const CURRENT_WEATHER_URL = `dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`;
     const WEATHER_FORECASTS_URL = `dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`;
     return (dispatch, getState) => {
