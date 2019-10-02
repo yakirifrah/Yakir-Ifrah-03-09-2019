@@ -4,7 +4,7 @@ import store from "store";
 
 export const requestData = locationKey => {
     console.log("request data");
-    const API_KEY = `Zz5x18nn2DwbYFUPGFl0VTN4Ssr1w1QY`;
+    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
     const CURRENT_WEATHER_URL = `dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`;
     const WEATHER_FORECASTS_URL = `dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`;
     return (dispatch, getState) => {
@@ -25,6 +25,7 @@ export const requestData = locationKey => {
                     newCurrentCity.text = WeatherText;
                     newCurrentCity.locationKey = locationKey;
                     newCurrentCity.icon = WeatherIcon;
+                    newCurrentCity.degreeSymbolCelsius = true;
                     if (store.get("favoriteCities") !== undefined) {
                         if (Object.getOwnPropertyNames(store.get("favoriteCities")).length) {
                             const favoriteCities = store.get("favoriteCities"); // get local storage with key=> favoriteCities
@@ -107,11 +108,13 @@ export const requestAutoCompleteFailed = error => {
 export const toggleFavorite = (currentCity, favoriteCities) => {
     const key = currentCity.locationKey;
     const isFavorite = currentCity.isFavorite;
+    const degreeSymbolCelsius = currentCity.degreeSymbolCelsius;
+    const temp = degreeSymbolCelsius ? currentCity.temp : Math.round((5 / 9) * (currentCity.temp - 32))
     if (favoriteCities !== undefined) {
         const objFavoriteCities = favoriteCities;
         if (key in objFavoriteCities) {
             if (!isFavorite) {
-                objFavoriteCities[key].temp = currentCity.temp;
+                objFavoriteCities[key].temp = temp;
                 objFavoriteCities[key].text = currentCity.text;
             } else {
                 const favoriteCitiesObj = favoriteCities;
@@ -119,10 +122,11 @@ export const toggleFavorite = (currentCity, favoriteCities) => {
                 store.set("favoriteCities", favoriteCitiesObj);
             }
         } else {
+
             objFavoriteCities[key] = {
                 id: key,
                 name: currentCity.name,
-                temp: currentCity.temp,
+                temp,
                 text: currentCity.text,
                 isFavorite: true
             };
@@ -133,7 +137,7 @@ export const toggleFavorite = (currentCity, favoriteCities) => {
         const firstFavoriteCity = {
             id: key,
             name: currentCity.name,
-            temp: currentCity.temp,
+            temp,
             text: currentCity.text,
             isFavorite: true
         };
@@ -149,7 +153,9 @@ export const toggleFavorite = (currentCity, favoriteCities) => {
             temp: currentCity.temp,
             text: currentCity.text,
             isFavorite: !currentCity.isFavorite,
-            icon: currentCity.icon
+            icon: currentCity.icon,
+            degreeSymbolCelsius: currentCity.degreeSymbolCelsius
+
         }
     };
 };
@@ -167,7 +173,8 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favori
                     isFavorite: true,
                     temp: currentCity.temp,
                     text: currentCity.text,
-                    icon: currentCity.icon
+                    icon: currentCity.icon,
+                    degreeSymbolCelsius: currentCity.degreeSymbolCelsius
                 }
             };
         } else {
@@ -179,7 +186,9 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favori
                     isFavorite: false,
                     temp: currentCity.temp,
                     text: currentCity.text,
-                    icon: currentCity.icon
+                    icon: currentCity.icon,
+                    degreeSymbolCelsius: currentCity.degreeSymbolCelsius
+
                 }
             };
         }
@@ -192,14 +201,16 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favori
                 isFavorite: false,
                 temp: currentCity.temp,
                 text: currentCity.text,
-                icon: currentCity.icon
+                icon: currentCity.icon,
+                degreeSymbolCelsius: currentCity.degreeSymbolCelsius
+
             }
         };
     }
 };
 export const requestAutocompleteCities = input => {
     console.log("request auto complete");
-    const API_KEY = `Zz5x18nn2DwbYFUPGFl0VTN4Ssr1w1QY`;
+    const API_KEY = `FTeL9gKM2wNuPkHxiTLuLGgk67jbOSuR`;
     const AUTOCOMPLETE_CITIES_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
     return dispatch => {
         dispatch(requestAutoCompletePending());
@@ -254,5 +265,39 @@ export const locationUpdate = (cityName, locationKey) => {
             type: actionTypes.UPDATE_LOCATION,
             currentCity: newCurrentCity
         })
+    }
+}
+
+
+export const toggleDegree = () => {
+    return (dispatch, getState) => {
+        const tempCurrentCity = getState().currentCity;
+        const { degreeSymbolCelsius } = tempCurrentCity;
+
+        if (degreeSymbolCelsius) {
+            const { temp } = tempCurrentCity;
+            const cToFahrenheit = Math.round(temp * 9 / 5 + 32);
+
+            tempCurrentCity.temp = cToFahrenheit;
+            tempCurrentCity.degreeSymbolCelsius = !degreeSymbolCelsius
+            const newCurrentCity = { ...tempCurrentCity }
+            dispatch({
+                type: actionTypes.TOGGLE_SYMBOL_DEGREE,
+                currentCity: newCurrentCity,
+            })
+
+        } else if (!degreeSymbolCelsius) {
+            const { temp } = tempCurrentCity;
+            const fahrenheitToCel = Math.round((5 / 9) * (temp - 32));
+            tempCurrentCity.temp = fahrenheitToCel;
+            tempCurrentCity.degreeSymbolCelsius = !degreeSymbolCelsius
+
+            const newCurrentCity = { ...tempCurrentCity }
+            dispatch({
+                type: actionTypes.TOGGLE_SYMBOL_DEGREE,
+                currentCity: newCurrentCity,
+            })
+        }
+
     }
 }

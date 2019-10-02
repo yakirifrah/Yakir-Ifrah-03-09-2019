@@ -15,10 +15,12 @@ const initialState = {
         temp: null,
         text: null,
         isFavorite: false,
-        icon: 34
+        icon: 34,
+        degreeSymbolCelsius: true
     },
 
-    updateCurrentLocation: false
+    updateCurrentLocation: false,
+    // degreeSymbolCelsius: true
 }
 
 
@@ -96,7 +98,11 @@ const updateLocation = (state, action) => {
     })
 }
 
-
+const changeSymbolDegree = (state, action) => {
+    return updateObject(state, {
+        currentCity: action.currentCity,
+    })
+}
 
 
 
@@ -110,6 +116,7 @@ export const rootReducer = (state = initialState, action) => {
         case actionTypes.REQUEST_AUTOCOMPLETE_SUCCESS: return requestAutocompleteSuccess(state, action);
         case actionTypes.REQUEST_AUTOCOMPLETE_FAILED: return requestAutoCompleteFailed(state, action);
         case actionTypes.TOGGLE_FAVORITE: return toggleFavorite(state, action);
+        case actionTypes.TOGGLE_SYMBOL_DEGREE: return changeSymbolDegree(state, action);
         case actionTypes.SET_LOCATION_KEY: return setLocationKey(state, action);
         default:
             return state;

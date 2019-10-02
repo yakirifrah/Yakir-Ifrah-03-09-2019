@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { requestData, toggleFavorite } from "../../../../store/action/index";
+import { requestData, toggleFavorite, toggleDegree } from "../../../../store/action/index";
 import store from "store";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -9,7 +9,7 @@ import CardDeck from "react-bootstrap/CardDeck";
 import Title from "../../../common/components/Title";
 import { ButtonContainer } from "../../../common/components/Button";
 import { ContainerModal as Modal } from "../Modal";
-
+import * as typeSymbol from "../../../../config";
 import CardList from "../../../common/components/CardList";
 import ReactLoading from "react-loading";
 import "./style.scss";
@@ -22,6 +22,7 @@ const Main = id => {
 
 	const nameOfImg = [1.1, 1, 2.0, 2.1, 2, 3, 4, 7, 12, 15, 33, 34, 35];
 	const icon = currentCity.icon;
+	const degreeSymbolCelsius = currentCity.degreeSymbolCelsius;
 	const realIcon = nameOfImg.includes(icon) ? icon : nameOfImg[Math.floor(Math.random() * nameOfImg.length)];
 
 	useEffect(() => {
@@ -35,6 +36,8 @@ const Main = id => {
 			dispatch(requestData(currentCity.locationKey));
 		}
 	}, [currentCity.locationKey]);
+	const DEGREE_SYMBOL = degreeSymbolCelsius ? typeSymbol.CELSIUS_SYMBOL : typeSymbol.FAHRENHEIT_SYMBOL;
+	const DEGREE_SYMBOL_BUTTON = degreeSymbolCelsius ? typeSymbol.FAHRENHEIT_SYMBOL : typeSymbol.CELSIUS_SYMBOL;
 
 	return (
 		<>
@@ -56,14 +59,29 @@ const Main = id => {
 										className="img-fluid"
 									/>
 								</Col>
-								<Col xs={1} md={3} lg={3}>
+								<Col xs={9} md={3} lg={3}>
 									<Title name={currentCity.name} />
 									<div className="temp">
 										<p className="current-weather">current-weather</p>
-										<span className="high"> {currentCity.temp}&#8451;</span>
+										<span className="high">
+											{" "}
+											{currentCity.temp}
+											{DEGREE_SYMBOL}
+										</span>
 									</div>
 								</Col>
-								<Col md={{ span: 3, offset: 5 }} className="padding-fav">
+
+								<Col xs={{ span: 1, offset: 3 }} md={{ span: 1, offset: 2 }} lg={{ span: 1, offset: 2 }}>
+									<ButtonContainer
+										onClick={() => {
+											dispatch(toggleDegree());
+										}}
+										paddingStyle
+									>
+										{DEGREE_SYMBOL_BUTTON}
+									</ButtonContainer>
+								</Col>
+								<Col xs={12} md={3} lg={3} className="padding-fav offset-2">
 									<div className="d-flex justify-content-center align-items-center">
 										<i
 											className={
