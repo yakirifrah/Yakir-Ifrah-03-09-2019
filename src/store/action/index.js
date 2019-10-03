@@ -3,7 +3,6 @@ import * as actionTypes from "./actionTypes";
 import store from "store";
 
 export const requestData = locationKey => {
-    console.log("request data");
     const API_KEY = `iAMzJxW63zxiBwJ9PDghyrOmQVJiqGvB`;
     const CURRENT_WEATHER_URL = `dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`;
     const WEATHER_FORECASTS_URL = `dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`;
@@ -209,7 +208,6 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favori
     }
 };
 export const requestAutocompleteCities = input => {
-    console.log("request auto complete");
     const API_KEY = `iAMzJxW63zxiBwJ9PDghyrOmQVJiqGvB`;
     const AUTOCOMPLETE_CITIES_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
     return dispatch => {
