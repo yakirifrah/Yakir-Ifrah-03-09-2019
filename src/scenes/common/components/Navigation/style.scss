@@ -1,33 +1,33 @@
 @import ".././../variables";
 
 .navbar {
-  background-color: $mainDark;
+	background-color: $mainDark;
 }
 
 .navbar-expand .navbar-nav {
-  flex-direction: row;
-  align-items: center;
+	flex-direction: row;
+	align-items: center;
 }
 
 .container-fluid {
-  &.nav-bar {
-    padding-right: 0px;
-    padding-left: 0px;
-    height: fit-content;
-  }
+	&.nav-bar {
+		padding-right: 0px;
+		padding-left: 0px;
+		height: fit-content;
+	}
 }
 
 .nav-item a,
 h5 {
-  color: $mainWhite !important;
-  font-size: large;
+	color: $mainWhite !important;
+	font-size: large;
 }
 
 .nav-item {
-  margin-left: 1rem;
-  margin-right: 1rem;
+	margin-left: 1rem;
+	margin-right: 1rem;
 }
 
 .style-text {
-  color: $mainWhite;
+	color: $mainWhite;
 }
