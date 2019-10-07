@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { requestData, toggleFavorite, toggleDegree } from "../../../../store/action/index";
-import store from "store";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -11,7 +10,9 @@ import { ButtonContainer } from "../../../common/components/Button";
 import { ContainerModal as Modal } from "../Modal";
 import * as typeSymbol from "../../../../config";
 import CardList from "../../../common/components/CardList";
+import store from "store";
 import ReactLoading from "react-loading";
+
 import "./style.scss";
 
 const Main = id => {

@@ -72,6 +72,7 @@ export const requestSuccess = (newCurrentCity, weatherForecastsList) => {
         weatherForecastsList: weatherForecastsList
     };
 };
+
 export const requestSearchSuccess = (detailCitiesSearch, tempCities) => {
     return {
         type: actionTypes.REQUEST_AUTOCOMPLETE_SUCCESS,
@@ -85,6 +86,7 @@ export const requestPending = () => {
         type: actionTypes.REQUEST_PENDING
     };
 };
+
 export const requestFailed = error => {
     return {
         type: actionTypes.REQUEST_FAILED,
@@ -97,6 +99,7 @@ export const requestAutoCompletePending = () => {
         type: actionTypes.REQUEST_AUTOCOMPLETE_PENDING
     };
 };
+
 export const requestAutoCompleteFailed = error => {
     return {
         type: actionTypes.REQUEST_AUTOCOMPLETE_FAILED,
@@ -207,7 +210,10 @@ export const setLocationCityKey = (city, currentCity, detailCitiesSearch, favori
         };
     }
 };
+
 export const requestAutocompleteCities = input => {
+    console.log('fetch data');
+
     const API_KEY = `iAMzJxW63zxiBwJ9PDghyrOmQVJiqGvB`;
     const AUTOCOMPLETE_CITIES_URL = `dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${input}`;
     return dispatch => {
@@ -247,11 +253,6 @@ export const requestAutocompleteCities = input => {
     };
 };
 
-
-
-
-
-
 export const locationUpdate = (cityName, locationKey) => {
 
     return (dispatch, getState) => {
@@ -265,7 +266,6 @@ export const locationUpdate = (cityName, locationKey) => {
         })
     }
 }
-
 
 export const toggleDegree = () => {
     return (dispatch, getState) => {

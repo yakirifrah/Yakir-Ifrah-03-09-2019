@@ -8,6 +8,7 @@ import Favorite from './scenes/Favorite';
 import NotFound from './scenes/NotFound';
 import { ThemeConsumer } from "./context";
 import { locationUpdate } from './store/action';
+
 import axios from "axios";
 
 

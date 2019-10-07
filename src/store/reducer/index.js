@@ -2,13 +2,6 @@ import * as actionTypes from '../action/actionTypes';
 import { updateObject } from '../utility';
 
 const initialState = {
-    weatherForecastsList: [],
-    error: null,
-    loading: false,
-    loadingAutoComplete: false,
-    errorAutoComplete: false,
-    autoCompleteCities: [],
-    detailCitiesSearch: [],
     currentCity: {
         locationKey: null,
         name: null,
@@ -18,14 +11,16 @@ const initialState = {
         icon: 34,
         degreeSymbolCelsius: true
     },
+    weatherForecastsList: [],
+    error: null,
+    loading: false,
+    autoCompleteCities: [],
+    detailCitiesSearch: [],
+    errorAutoComplete: false,
+    loadingAutoComplete: false,
 
     updateCurrentLocation: false,
-    // degreeSymbolCelsius: true
 }
-
-
-
-
 
 
 const requestPending = (state, action) => {
@@ -65,6 +60,7 @@ const requestAutoCompleteFailed = (state, action) => {
         loadingAutoComplete: false
     })
 }
+
 const requestAutocompleteSuccess = (state, action) => {
     return updateObject(state, {
         errorAutoComplete: null,
@@ -86,10 +82,6 @@ const setLocationKey = (state, action) => {
     })
 }
 
-
-
-
-
 const updateLocation = (state, action) => {
     return updateObject(state, {
         currentCity: action.currentCity,
@@ -103,7 +95,6 @@ const changeSymbolDegree = (state, action) => {
         currentCity: action.currentCity,
     })
 }
-
 
 
 export const rootReducer = (state = initialState, action) => {
@@ -121,5 +112,4 @@ export const rootReducer = (state = initialState, action) => {
         default:
             return state;
     }
-
 }
