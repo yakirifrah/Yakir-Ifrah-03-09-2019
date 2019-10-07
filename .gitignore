@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-/.vscode
+
 # testing
 /coverage
 
@@ -23,8 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # files
-**/check
-**/*.log
+check
+*.log
 
 
 
